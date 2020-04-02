@@ -1,0 +1,17 @@
+Test stuff
+testing stuff
+
+We can record unhappiness levels, and compare them to the happiness 
+levels and see if they are comparatively
+better
+
+objective: randomly organize groups into different "buckets" and measure happiness levels,
+maximizing the happiness. As an add-on we measure unhappiness, where we see how many groups
+do not have the people they asked for (add up how many zeros there are). We will start by accepting
+the csv with the names and lists, the lists will be put into a list of lists,
+and then the buckets will be randomly formed. From there, each individual will be compared to the
+rest of the bucket, and a counter for happiness and unhappiness will be taken into account. 
+Afterwards, the buckets will be randomly swapped, and the same process will continue again, this
+time comparing happiness and unhappiness to the previous group, and if this instance is better then
+it becomes the new bucket system, if not the previous, and this process will continue for at least
+3 times (maybe the factorial of the group size if the program can handle it). 

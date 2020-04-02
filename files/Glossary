@@ -1,0 +1,38 @@
+Glossary:
+
+Buckets (or Teams, Groups) - the collection of individuals that are determined by the program.
+
+Individuals - a single person that will be organized in a bucket
+
+Choices - the recommendations made by individuals of who they want on their team
+
+Happiness - points denoted by individuals and their choices in the same bucket
+	Overall happiness - the sum of happiness in a bucket
+	Individual happiness - the sum of happiness an individual gets when any amount of 
+their choices are in the same bucket as the individual
+
+Unhappiness - points denoted by individuals who don’t get their choices
+	Overall happiness - the sum of unhappiness in a bucket
+	Individual happiness - the sum of unhappiness an individual gets when an  
+amount of their choices are not in the same bucket as the individual
+
+Algorithm - the code in a program that determines the teams and calculates the happiness and 
+unhappiness that maximizes happiness and minimizes unhappiness
+
+Ranking Priority - the order an individual places their choices in the csv file that helps 
+determines happiness, descending order from left to right in the choices section of the 
+file, that will increase the chance the algorithm places the individual and their choices in 
+the same bucket
+
+Verbosity: The amount of debugging text that is printed.
+
+Verbosity level 0: Nothing is printed out.
+
+Verbosity level 1: Basic debugging statement, shows how many times the outer loop is run.
+
+Verbosity level 2: Everything in the previous levels, including the values of inner loop iterations.
+
+Verbosity level 3: Everything in the previous levels, including the values of swapped values in current_team.
+
+Verbosity level 4: Everything on the previous levels, including which members are being compared
+are printed out.

@@ -1,0 +1,12 @@
+Inception Deck
+
+1.	We are here to organize teams based on people’s preferences, our customers are the potential team members, and we are doing this to satisfy the potential team members
+2.	We would say we have found a quick and easy way to organize groups of people into the most desirable groups based on the numerical ratings of people
+3.	The box would say “Try an amazing, new, cheap, and quick-working product, the Group Grouper! With this revolutionary technology we have found the perfect way to organize the best groups based on people’s ratings, it’s quick and easy!”
+4.	We are not bloating it with more features, and we are not making it expensive
+5.	Invitations sent out
+6.	We have a coded solution on github, but the basic premise is that we will accept a csv file, take the name along with the numbers, and organize the teams based on that
+7.	Some issues we can discuss are the efficiencies of the program, as we can use a proper sorting algorithm to go through everything
+8.	This is a 2-3 week project
+9.	There will be no budget costs, small scope, time-wise it will take maybe 3 weeks, and we will deliver on quality
+10.	It will take 2-3 weeks, no cost, and the team will be a two man team of capable programmers. 

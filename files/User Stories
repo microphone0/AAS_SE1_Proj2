@@ -1,0 +1,21 @@
+User Stories:
+
+	Story 1: Happy Checker
+		Happy in smaller groups:
+		Users will be able to define how happy they are working either alone or in smaller groups,
+		making the smaller groups easier to organize and calculate.
+		
+		User Interface:
+		Users will have a more clear and concise user interface to enter the information on, as
+		not all users are familiear with a cmd interface.
+		
+		Email Option:
+		Users will be prompted with the option to have the information emailed to them.
+		
+		Verbosity 5:
+		Users will be able to see even more information when asking for verbosity 5, displaying 
+		the mathematical operations that occured when computing the information.
+		
+		Timer:
+		Users will have the option to track how long it takes to compute the information, which
+		can give them an idea on when the information will be availible. 
