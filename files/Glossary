@@ -23,16 +23,3 @@ Ranking Priority - the order an individual places their choices in the csv file 
 determines happiness, descending order from left to right in the choices section of the 
 file, that will increase the chance the algorithm places the individual and their choices in 
 the same bucket
-
-Verbosity: The amount of debugging text that is printed.
-
-Verbosity level 0: Nothing is printed out.
-
-Verbosity level 1: Basic debugging statement, shows how many times the outer loop is run.
-
-Verbosity level 2: Everything in the previous levels, including the values of inner loop iterations.
-
-Verbosity level 3: Everything in the previous levels, including the values of swapped values in current_team.
-
-Verbosity level 4: Everything on the previous levels, including which members are being compared
-are printed out.
