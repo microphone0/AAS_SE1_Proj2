@@ -119,6 +119,38 @@ public class GoogleTeams {
 
 
 
+        // // scans file into inputString (arraylist)
+        // if(test == 0)
+		// {
+        //     System.out.println("GoogleTeams:");
+        //     Scanner scanner = new Scanner(System.in);
+        //     String tempString = ""; // if needed
+		// 	while(scanner.hasNext())
+		// 	{
+        //         inputString.add(scanner.next());
+		// 	}
+        // }
+
+        // // shows what inputString has // needs to be parsed
+        // for(int i = 0; i < inputString.size(); i++)
+        // {
+        //     System.out.println(inputString.get(i));
+        // }
+
+        // creates and outputs matrix
+        System.out.println("");
+        System.out.println("New Matrix: ");
+        KeanuReeves = createMatrix(inputString);
+
+        System.out.println("GroupSize: " + groupsize);
+        System.out.println("Number of People: " + numberOfPeople);
+        outputMatrix(KeanuReeves);
+    }
+
+/////////////////////////////////////////////////////// new
+    //reads in file
+    public boolean readFile(String file)
+    {
         // scans file into inputString (arraylist)
         if(test == 0)
 		{
@@ -136,18 +168,9 @@ public class GoogleTeams {
         {
             System.out.println(inputString.get(i));
         }
-
-        // creates and outputs matrix
-        System.out.println("");
-        System.out.println("New Matrix: ");
-        KeanuReeves = createMatrix(inputString);
-
-        System.out.println("GroupSize: " + groupsize);
-        System.out.println("Number of People: " + numberOfPeople);
-        outputMatrix(KeanuReeves);
+        return true;
     }
-
-
+///////////////////////////////////////////////////////
 
     // takes input String and creates a matrix
     public static int[][] createMatrix(ArrayList<String> becomeMatrix)
