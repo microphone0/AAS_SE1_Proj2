@@ -7,10 +7,17 @@
  *
  */
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.lang.Math;
+import java.util.Random;
 import java.lang.Object;
 import java.util.*;
-import java.util.Arrays;
-import java.util.Random;
 
 public class GoogleTeams {
     private static int test = 0;
@@ -22,10 +29,12 @@ public class GoogleTeams {
     private static int n = 1000;
     private static int l = 5;
     private static int r = 2;
+    private static String fileName = "EMPTY";
     private static boolean v_one = false;
     private static boolean v_two = false;
     private static boolean v_three = false;
     private static boolean v_four = false;
+    private static int totalNumPerson = 0; // readFile()
 
     private static int matrixColumns;
     private static int matrixRows;
@@ -94,14 +103,19 @@ public class GoogleTeams {
                 // decline percentage
                 if(args[val].equals("-r")){
                     r = Integer.valueOf(args[val+1]);
-                } 
+                }
             }
         }
         else {
             System.out.println("No command line "+ 
                                "arguments found."); 
         }
-
+        
+        // outputs everything from command line
+        for(String s : args){
+            System.out.println(s);
+            }
+        
         // outputs command line information
         if(v_two)
         {
@@ -114,43 +128,7 @@ public class GoogleTeams {
             System.out.println("l: " + l);
             System.out.println("r: " + r);
         }
-    
 
-
-
-
-        // // scans file into inputString (arraylist)
-        // if(test == 0)
-		// {
-        //     System.out.println("GoogleTeams:");
-        //     Scanner scanner = new Scanner(System.in);
-        //     String tempString = ""; // if needed
-		// 	while(scanner.hasNext())
-		// 	{
-        //         inputString.add(scanner.next());
-		// 	}
-        // }
-
-        // // shows what inputString has // needs to be parsed
-        // for(int i = 0; i < inputString.size(); i++)
-        // {
-        //     System.out.println(inputString.get(i));
-        // }
-
-        // creates and outputs matrix
-        System.out.println("");
-        System.out.println("New Matrix: ");
-        KeanuReeves = createMatrix(inputString);
-
-        System.out.println("GroupSize: " + groupsize);
-        System.out.println("Number of People: " + numberOfPeople);
-        outputMatrix(KeanuReeves);
-    }
-
-/////////////////////////////////////////////////////// new
-    //reads in file
-    public boolean readFile(String file)
-    {
         // scans file into inputString (arraylist)
         if(test == 0)
 		{
@@ -168,8 +146,76 @@ public class GoogleTeams {
         {
             System.out.println(inputString.get(i));
         }
-        return true;
+
+        // reads in csv file
+        System.out.println("Read in file:" + fileName);
+        readFile(fileName);
+
+        // creates matrix
+        System.out.println("New Matrix: ");
+        KeanuReeves = createMatrix(inputString);
+
+        // outputs GroupSize, Number of People and Matrix
+        System.out.println("GroupSize: " + groupsize);
+        System.out.println("Number of People: " + numberOfPeople);
+        outputMatrix(KeanuReeves);
     }
+
+/////////////////////////////////////////////////////// moved from main file to new function for testing
+public static boolean readFile(String csvFile) {
+    System.out.println("READFILE FUNCTION:");
+    String line = "";
+    String cvsSplitBy = ",";
+    ArrayList<String> bucket_list = new ArrayList<String>();
+    ArrayList<String> teams_main = new ArrayList<String>();
+    ArrayList<String> teams_other = new ArrayList<String>();
+    ArrayList<String[]> preferences = new ArrayList<String[]>();
+    
+    // v_one = true;
+    // v_two = true;
+    // v_three = true;
+    // v_four = true;
+
+    // numPerson help with tracking the people in the csv and makes printing more sense
+    int numPerson = 1;
+    try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+        while ((line = br.readLine()) != null) {
+
+            // use comma as separator
+            // doesn't need quotes around any of the things in the file
+            // may cause type errors in the future
+            String[] member = line.split(cvsSplitBy);
+
+            preferences.add(member);
+
+            if(v_one){
+                // Print out what's in the csv
+                System.out.print("Member "+numPerson+": "+member[0]+" [");
+                if (member.length > 1){
+                    System.out.print(member[1]);
+                    for (int i = 2; i < member.length; i++) {
+                        System.out.print(","+member[i]);
+                    }
+                }
+                System.out.println("]");
+            }
+            bucket_list.add(String.valueOf(numPerson));
+                            
+            numPerson++;
+        }
+
+        teams_other = bucket_list;
+        totalNumPerson = numPerson - 1;
+
+        return true;
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        return false;
+    }
+
+}
 ///////////////////////////////////////////////////////
 
     // takes input String and creates a matrix

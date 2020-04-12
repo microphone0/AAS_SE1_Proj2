@@ -27,7 +27,7 @@ public class GoogleTeamsTest
     public TestRule watcher =
     	new TestWatcher() {
     	    protected void starting(Description description) {
-    		System.out.println("Starting test: " + description.getMethodName());
+    		System.out.println("Google Starting test: " + description.getMethodName());
     	}
     };
     
@@ -41,7 +41,7 @@ public class GoogleTeamsTest
     {
     	boolean worked = googleTeams.readFile("Test.csv");
        	assertEquals(true,worked);
-        System.out.println("\n");
+        System.out.println("finishedtest1");
     }
 
 }
