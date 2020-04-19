@@ -5,7 +5,7 @@
  * Task: Accept a list of names from a .txt and create a Matrix
  * Due Date: ¯\_(ツ)_/¯
  *
- */
+ *****************************************/
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -291,11 +291,23 @@ public boolean readFile(String file) {
     }
     
     //////Adam S's code////////
+    /////Horizontal is outgoing; vertical is incoming
+    /*
+      A B C D E
+    A 0 1 0 0 0
+    B 0 0 0 0 1
+    C 1 1 0 1 1
+    D 0 0 1 0 1
+    E 0 0 0 1 0
+
+    A has one incoming from C; and C has one outgoing to A
+    B has one incoming from A; and B has one outgoing to E
+    */
     public void pageRank() {
     	int tempNumPeople = 4;
     	int firstWeight = 1/tempNumPeople;
     	double[] tempMatrix = {0,0,0,0};
-    	double[] numOfOutgoing = {0,0,0,0}
+    	double[] numOfOutgoing = {0,0,0,0};
 
     	for (int i=0; i > tempMatrix.size(); i++) {
     		tempMatrix[i] = firstWeight;
