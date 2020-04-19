@@ -26,6 +26,11 @@ public class GoogleTeams {
 
     // adam Saxtons variables
     private static int groupsize = 3;
+    private static int verbosity = 0;
+    // private static boolean v_one = false;
+    // private static boolean v_two = false;
+    // private static boolean v_three = false;
+    // private static boolean v_four = false;
     private static int n = 1000;
     private static int l = 5;
     private static int r = 2;
@@ -56,41 +61,44 @@ public class GoogleTeams {
         matrixTestInput.add("B,A,S");
         // reading input from comand line
         if (args.length > 0)
-        { 
-
-            System.out.println("The command line"+ 
-                               " arguments are:"); 
+        {
 
             // iterating the args array and printing 
             // the command line arguments 
             for (int val = 0; val < args.length; val+=2)
             {
 
-                // verbosity
+                // Verbosity
                 if(args[val].equals("-v"))
                 {
                     // The higher the number the more debugging code the user can see
-                    if(Integer.valueOf(args[val + 1]) > 0){
-                        v_one = true;
+                    if (Integer.valueOf(args[val+1] > 0)) {
+                        verbosity = Integer.valueOf(args[val+1]);
+                        if (verbosity > 4){
+                            verbosity = 4;
+                        }
                     }
+      //               if(Integer.valueOf(args[val + 1]) > 0){
+      //                   v_one = true;
+      //               }
 
-                    if(Integer.valueOf(args[val + 1]) > 1){
-						v_one = true;
-                        v_two = true;
-                    }
+      //               if(Integer.valueOf(args[val + 1]) > 1){
+						// v_one = true;
+      //                   v_two = true;
+      //               }
 
-                    if(Integer.valueOf(args[val + 1]) > 2){
-						v_one = true;
-                        v_two = true;
-                        v_three = true;
-                    }
+      //               if(Integer.valueOf(args[val + 1]) > 2){
+						// v_one = true;
+      //                   v_two = true;
+      //                   v_three = true;
+      //               }
 
-                    if(Integer.valueOf(args[val + 1]) > 3){
-						v_one = true;
-                        v_two = true;
-                        v_three = true;
-                        v_four = true;
-                    }
+      //               if(Integer.valueOf(args[val + 1]) > 3){
+						// v_one = true;
+      //                   v_two = true;
+      //                   v_three = true;
+      //                   v_four = true;
+      //               }
                 }
 
                 // GroupSize
@@ -120,8 +128,11 @@ public class GoogleTeams {
         }
 
         // outputs command line information
-        if(v_two)
+        if(verbosity == 2)
         {
+            System.out.println("The command line arguments are:\n"); 
+            System.out.println("Verbosity: " + verbosity);
+            System.out.println("Groupsize (t): " + groupsize);
             System.out.println("Verbosity 1: " + v_one);
             System.out.println("Verbosity 2: " + v_two);
             System.out.println("Verbosity 3: " + v_three);
@@ -279,7 +290,41 @@ public boolean readFile(String file) {
         return newMatrix;
     }
     
+    //////Adam S's code////////
+    public void pageRank() {
+    	int tempNumPeople = 4;
+    	int firstWeight = 1/tempNumPeople;
+    	double[] tempMatrix = {0,0,0,0};
+    	double[] numOfOutgoing = {0,0,0,0}
 
+    	for (int i=0; i > tempMatrix.size(); i++) {
+    		tempMatrix[i] = firstWeight;
+    	}
+    	/**for(length of tempMatrix){
+			for(length of people and the preferences){
+				if(node I'm looking at has preferences)
+					numofOutgoing[nodeI'mLookingAt] = #OfPreferences;
+			}
+    	}**/
+    	/**for(how many times we want to iterate){
+    		int[] tempPageRank = {0,0,0,0};
+    		for(length of tempMatrix){
+    			int nodePageRank = 0;
+				for(length of preference file){
+					if(the node I'm looking at is in a person's preference)
+						nodePageRank = nodePageRank + (1/numOfOutgoing[nodeI'mLookingAtInPreferencesLoop]);
+				}
+				tempPageRank[nodeLookingat] = nodePageRank;
+    		}
+    		for(lengthofTempMatrix){
+				tempMatrix[lookingAt] = tempPageRank[lookingAt];
+    		}
+    	}
+    	for(lengthOftempMatrix){
+    		tempMatrix[lookingAt] = (1-.dampingFactor)+(tempMatrix[LookingAt]*.dampingFactor)
+    	}**/
+
+    }
 
 
 
