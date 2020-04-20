@@ -53,6 +53,7 @@ public class GoogleTeams {
     private static ArrayList<String> matrixTestInput = new ArrayList<String>();/////
     private static ArrayList<String> inputString = new ArrayList<String>();
     private static ArrayList<String> peopleNames = new ArrayList<String>();
+    public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
 
     // change input String into number of peopleNames
     public static void main(String[] args)
@@ -364,38 +365,38 @@ public boolean readFile(String file) {
 
 
 
-    // takes an arraylist of arraylist of Strings and converts it to arraylist of arraylist of Integers
-    
-    private static ArrayList<ArrayList<Integer>> intMatrix = new ArrayList<ArrayList<Integer>>();
-    private static ArrayList<String> allNames = new ArrayList<String>();
-
+    // takes an arraylist of arraylist of Strings and returns adjacency arraylist of arraylist of Integers
+    // works so long as allNames is assigned correctly  <-- *** needs to be fixed ***
     public static ArrayList<ArrayList<Integer>> createAdjacencyMatrix(ArrayList<ArrayList<String>> stringMatrix)
     {
+        ArrayList<ArrayList<Integer>> intMatrix = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> tempArrayList;
         boolean match = false;
 
+        System.out.println( "allNames Size: " + allNames.size()); // test
+        System.out.println( "stringMatrix Size: " + stringMatrix.size()); // test
         for(int outer = 0; outer < stringMatrix.size(); outer++)
         {
+            tempArrayList = new ArrayList<Integer>(); // clears tempArrayList
             for(int compare = 0; compare < allNames.size(); compare++)
             {
                 match = false; // resets match
                 for(int inner = 1; inner < stringMatrix.get(outer).size(); inner++) // starts at one bc '0' doesnt count
                 {
                     if(stringMatrix.get(outer).get(inner) == allNames.get(compare))
-                    {
-                        match = true; // if match true
-                    }
+                        match = true;
                 }
+
                 if(match) 
-                    intMatrix.get(outer).add(1); // if match inset 1
+                    tempArrayList.add(1); // if match inset 1
                 if(!match) 
-                    intMatrix.get(outer).add(0); // if no match insert 0
+                    tempArrayList.add(0); // if no match insert 0
             }
+            intMatrix.add(tempArrayList); // adds a row to intMatrix
         }
 
         return intMatrix;
     }
-
-
 
 
 
@@ -404,11 +405,15 @@ public boolean readFile(String file) {
     {
         for(int outer = 0; outer < matrix.size(); outer++)
         {
-            for(int inner = 0; inner < matrix.size(); inner++)
-            {
-                System.out.println("Line " + outer + ":");
-                System.out.println( matrix.get(outer).get(inner) );
-            }
+            System.out.println( matrix.get(outer) );
         }
+    }
+    
+
+
+    public static void setAllNames(ArrayList<String> reassign)
+    {
+        // create new allNames that contains arrayList passed into method
+        allNames = new ArrayList<String>(reassign);
     }
 }
