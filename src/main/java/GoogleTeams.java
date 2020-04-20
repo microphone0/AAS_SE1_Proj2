@@ -17,6 +17,7 @@ import java.util.List;
 import java.lang.Math;
 import java.util.Random;
 import java.lang.Object;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GoogleTeams {
@@ -72,33 +73,33 @@ public class GoogleTeams {
                 if(args[val].equals("-v"))
                 {
                     // The higher the number the more debugging code the user can see
-                    if (Integer.valueOf(args[val+1] > 0)) {
+                    if (Integer.valueOf(args[val + 1]) > 0) {
                         verbosity = Integer.valueOf(args[val+1]);
                         if (verbosity > 4){
                             verbosity = 4;
                         }
                     }
-      //               if(Integer.valueOf(args[val + 1]) > 0){
-      //                   v_one = true;
-      //               }
+                    if(Integer.valueOf(args[val + 1]) > 0){
+                        v_one = true;
+                    }
 
-      //               if(Integer.valueOf(args[val + 1]) > 1){
-						// v_one = true;
-      //                   v_two = true;
-      //               }
+                    if(Integer.valueOf(args[val + 1]) > 1){
+						v_one = true;
+                        v_two = true;
+                    }
 
-      //               if(Integer.valueOf(args[val + 1]) > 2){
-						// v_one = true;
-      //                   v_two = true;
-      //                   v_three = true;
-      //               }
+                    if(Integer.valueOf(args[val + 1]) > 2){
+						v_one = true;
+                        v_two = true;
+                        v_three = true;
+                    }
 
-      //               if(Integer.valueOf(args[val + 1]) > 3){
-						// v_one = true;
-      //                   v_two = true;
-      //                   v_three = true;
-      //                   v_four = true;
-      //               }
+                    if(Integer.valueOf(args[val + 1]) > 3){
+						v_one = true;
+                        v_two = true;
+                        v_three = true;
+                        v_four = true;
+                    }
                 }
 
                 // GroupSize
@@ -224,7 +225,7 @@ public boolean readFile(String file) {
 
             teams_other = bucket_list;
 			totalNumPerson = numPerson-1;
-            System.out.println("REadFile WORKED");
+            System.out.println("ReadFile WORKED");
             return true;
 
         } catch (IOException e) {
@@ -281,7 +282,7 @@ public boolean readFile(String file) {
                     if(Arrays.asList(peopleNames.get(i)).equals(splitArray[f]))
                     {
                         newMatrix[i][n] = 1;
-                        //System.out.println("^match^");
+                        System.out.println(newMatrix[i][n]);
                     }
                 }
             }
@@ -309,7 +310,7 @@ public boolean readFile(String file) {
     	double[] tempMatrix = {0,0,0,0};
     	double[] numOfOutgoing = {0,0,0,0};
 
-    	for (int i=0; i > tempMatrix.size(); i++) {
+    	for (int i=0; i > tempMatrix.length; i++) {
     		tempMatrix[i] = firstWeight;
     	}
     	/**for(length of tempMatrix){
@@ -337,7 +338,10 @@ public boolean readFile(String file) {
     	}**/
 
     }
+    
 
+
+    
 
 
     // for demo
@@ -355,4 +359,56 @@ public boolean readFile(String file) {
         }
     }
 
+
+
+
+
+
+    // takes an arraylist of arraylist of Strings and converts it to arraylist of arraylist of Integers
+    
+    private static ArrayList<ArrayList<Integer>> intMatrix = new ArrayList<ArrayList<Integer>>();
+    private static ArrayList<String> allNames = new ArrayList<String>();
+
+    public static ArrayList<ArrayList<Integer>> createAdjacencyMatrix(ArrayList<ArrayList<String>> stringMatrix)
+    {
+        boolean match = false;
+
+        for(int outer = 0; outer < stringMatrix.size(); outer++)
+        {
+            for(int compare = 0; compare < allNames.size(); compare++)
+            {
+                match = false; // resets match
+                for(int inner = 1; inner < stringMatrix.get(outer).size(); inner++) // starts at one bc '0' doesnt count
+                {
+                    if(stringMatrix.get(outer).get(inner) == allNames.get(compare))
+                    {
+                        match = true; // if match true
+                    }
+                }
+                if(match) 
+                    intMatrix.get(outer).add(1); // if match inset 1
+                if(!match) 
+                    intMatrix.get(outer).add(0); // if no match insert 0
+            }
+        }
+
+        return intMatrix;
+    }
+
+
+
+
+
+    // outputs adjecency matrix
+    public static void outputAdjacencyMatrix(ArrayList<ArrayList<Integer>> matrix) // may not need parameters
+    {
+        for(int outer = 0; outer < matrix.size(); outer++)
+        {
+            for(int inner = 0; inner < matrix.size(); inner++)
+            {
+                System.out.println("Line " + outer + ":");
+                System.out.println( matrix.get(outer).get(inner) );
+            }
+        }
+    }
 }
