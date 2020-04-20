@@ -28,10 +28,6 @@ public class GoogleTeams {
     // adam Saxtons variables
     private static int groupsize = 3;
     private static int verbosity = 0;
-    // private static boolean v_one = false;
-    // private static boolean v_two = false;
-    // private static boolean v_three = false;
-    // private static boolean v_four = false;
     private static int n = 1000;
     private static int l = 5;
     private static int r = 2;
@@ -53,6 +49,8 @@ public class GoogleTeams {
     private static ArrayList<String> matrixTestInput = new ArrayList<String>();/////
     private static ArrayList<String> inputString = new ArrayList<String>();
     private static ArrayList<String> peopleNames = new ArrayList<String>();
+
+    public static ArrayList<ArrayList<String>> stringMatrix;
     public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
 
     // change input String into number of peopleNames
@@ -308,12 +306,45 @@ public boolean readFile(String file) {
     public void pageRank() {
     	int tempNumPeople = 4;
     	int firstWeight = 1/tempNumPeople;
-    	double[] tempMatrix = {0,0,0,0};
-    	double[] numOfOutgoing = {0,0,0,0};
+    	//double[] tempMatrix = {0,0,0,0};
+        double[] numOfOutgoing = {0,0,0,0};
 
-    	for (int i=0; i > tempMatrix.length; i++) {
-    		tempMatrix[i] = firstWeight;
-    	}
+    	// for (int i=0; i > tempMatrix.length; i++) {
+    	// 	tempMatrix[i] = firstWeight;
+        // }
+
+
+        //////////////////////////////////////////////////////////////// Adam G added
+        /* code to create Matrix (ArrayList of Arraylist) 
+          A B C
+        A 0 1 1
+        B 1 0 0
+        C 0 1 0
+        
+        https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html
+        https://stackoverflow.com/questions/25147799/java-arraylist-of-arraylist
+        */
+        ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> inner = new ArrayList<Integer>();        
+
+        inner.add(0);     
+        inner.add(1);
+        inner.add(1);
+        outerMatrix.add(inner); // add first list
+        inner = new ArrayList<Integer>(); // create a new inner list
+
+        inner.add(1);     
+        inner.add(0);
+        inner.add(0);                               
+        outerMatrix.add(inner); // add second list
+        inner = new ArrayList<Integer>(); // create a new inner list
+
+        inner.add(0);     
+        inner.add(1);
+        inner.add(0);                       
+        outerMatrix.add(inner); // add third list
+        /////////////////////////////////////////////////////////
+        
     	/**for(length of tempMatrix){
 			for(length of people and the preferences){
 				if(node I'm looking at has preferences)
@@ -408,7 +439,7 @@ public boolean readFile(String file) {
             System.out.println( matrix.get(outer) );
         }
     }
-    
+
 
 
     public static void setAllNames(ArrayList<String> reassign)
