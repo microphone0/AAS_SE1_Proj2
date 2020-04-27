@@ -27,7 +27,7 @@ public class GoogleTeams {
 
     // adam Saxtons variables
     private static int groupsize = 3;
-    private static int verbosity = 0;
+    private static int verbosity = 1;
     private static int n = 1000;
     private static int l = 5;
     private static int r = 2;
@@ -290,30 +290,26 @@ public boolean readFile(String file) {
         return newMatrix;
     }
     
-    //////Adam S's code////////
-    /////Horizontal is outgoing; vertical is incoming
-    /*
-      A B C D E
-    A 0 1 0 0 0
-    B 0 0 0 0 1
-    C 1 1 0 1 1
-    D 0 0 1 0 1
-    E 0 0 0 1 0
-
-    A has one incoming from C; and C has one outgoing to A
-    B has one incoming from A; and B has one outgoing to E
-    */
     public void pageRank() {
-    	int tempNumPeople = 4;
-    	int firstWeight = 1/tempNumPeople;
-    	//double[] tempMatrix = {0,0,0,0};
-        double[] numOfOutgoing = {0,0,0,0};
+        int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
+        double firstWeight = 1.0/tempNumPeople; // Used to initialize
+        double[] weights = new double[tempNumPeople]; // Holds the final weights or what is currently been calculated
+        double dampingFactor = .85; // Used at last step
+        int[] numOutgoing = new int[tempNumPeople]; // Number of outgoing links
+        double[] newWeights = new double[tempNumPeople]; // To hold temporarily the new weights calculated
 
-    	// for (int i=0; i > tempMatrix.length; i++) {
-    	// 	tempMatrix[i] = firstWeight;
-        // }
+        // The matrix components will need inner not outerMatrix when connecting to rest of the code
+        ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> inner = new ArrayList<Integer>();
 
+        // Initialize all arrays to 0
+        for (int i=0; i < tempNumPeople; i++) {
+            weights[i] = 0;
+            numOutgoing[i] = 0;
+            newWeights[i] = 0;
+        }
 
+        // ALL TESTING CODE ***********************
         //////////////////////////////////////////////////////////////// Adam G added
         /* code to create Matrix (ArrayList of Arraylist) 
           A B C
@@ -323,52 +319,193 @@ public boolean readFile(String file) {
         
         https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html
         https://stackoverflow.com/questions/25147799/java-arraylist-of-arraylist
-        */
-        ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> inner = new ArrayList<Integer>();        
+        */        
 
+        // inner.add(0);     
+        // inner.add(1);
+        // inner.add(1);
+        // outerMatrix.add(inner); // add first list
+        // inner = new ArrayList<Integer>(); // create a new inner list
+
+        // inner.add(1);     
+        // inner.add(0);
+        // inner.add(0);                               
+        // outerMatrix.add(inner); // add second list
+        // inner = new ArrayList<Integer>(); // create a new inner list
+
+        // inner.add(0);     
+        // inner.add(1);
+        // inner.add(0);                       
+        // outerMatrix.add(inner); // add third list
+        //*******************************************
+        /////////////////////////////////////////////////////////        
+        /////////////////////////////////////////////////////////
+        // ALL TESTING CODE ***********************
+        /////Vertical is INCOMING; Horizontal is OUTGOING
+        /*
+          A B C D E
+        A 0 1 0 0 0
+        B 0 0 0 0 1
+        C 1 1 0 1 1
+        D 0 0 1 0 1
+        E 0 0 0 1 0
+
+        A has one incoming from C; and C has one outgoing to A
+        B has one incoming from A; and B has one outgoing to E
+        */
         inner.add(0);     
         inner.add(1);
-        inner.add(1);
+        inner.add(0);
+        inner.add(0);
+        inner.add(0);
         outerMatrix.add(inner); // add first list
         inner = new ArrayList<Integer>(); // create a new inner list
 
-        inner.add(1);     
+        inner.add(0);     
         inner.add(0);
-        inner.add(0);                               
+        inner.add(0); 
+        inner.add(0);
+        inner.add(1);                              
         outerMatrix.add(inner); // add second list
         inner = new ArrayList<Integer>(); // create a new inner list
 
+        inner.add(1);     
+        inner.add(1);
+        inner.add(0);
+        inner.add(1);
+        inner.add(1);                       
+        outerMatrix.add(inner);
+        inner = new ArrayList<Integer>();
+
         inner.add(0);     
+        inner.add(0);
+        inner.add(1);
+        inner.add(0);
+        inner.add(1);                       
+        outerMatrix.add(inner);
+        inner = new ArrayList<Integer>();
+
+        inner.add(0);     
+        inner.add(0);
+        inner.add(0);
         inner.add(1);
         inner.add(0);                       
-        outerMatrix.add(inner); // add third list
-        /////////////////////////////////////////////////////////
-        
-    	/**for(length of tempMatrix){
-			for(length of people and the preferences){
-				if(node I'm looking at has preferences)
-					numofOutgoing[nodeI'mLookingAt] = #OfPreferences;
-			}
-    	}**/
-    	/**for(how many times we want to iterate){
-    		int[] tempPageRank = {0,0,0,0};
-    		for(length of tempMatrix){
-    			int nodePageRank = 0;
-				for(length of preference file){
-					if(the node I'm looking at is in a person's preference)
-						nodePageRank = nodePageRank + (1/numOfOutgoing[nodeI'mLookingAtInPreferencesLoop]);
-				}
-				tempPageRank[nodeLookingat] = nodePageRank;
-    		}
-    		for(lengthofTempMatrix){
-				tempMatrix[lookingAt] = tempPageRank[lookingAt];
-    		}
-    	}
-    	for(lengthOftempMatrix){
-    		tempMatrix[lookingAt] = (1-.dampingFactor)+(tempMatrix[LookingAt]*.dampingFactor)
-    	}**/
+        outerMatrix.add(inner);
+        inner = new ArrayList<Integer>();
+        //*******************************************
 
+        // Initialize weights (Initial step)
+        for (int i=0; i < weights.length; i++) {
+            weights[i] = firstWeight;
+        }
+
+        if (verbosity >= 1) {
+            System.out.print("First Weights: ");
+            System.out.print(weights[0]);
+            for (int i=1; i < weights.length; i++) {
+                System.out.print(", "+weights[i]);
+            }
+            System.out.print("\n");
+        }
+        
+        // Calculate outgoing links (First step A)
+        // Divide the weights by the number of outgoing links
+        for (int i=0; i < outerMatrix.size(); i++) {
+            double numOut = 0;
+            // Get the row at i
+            inner = outerMatrix.get(i);
+            for (int j=0; j < inner.size(); j++) {
+                if (inner.get(j) == 1) {
+                    numOut++;
+                    numOutgoing[i] = numOutgoing[i]+1;
+                }
+            }
+            weights[i] = weights[i]/numOut;
+        }
+
+        if (verbosity >= 3) {
+            System.out.print("Outgoing Array: ");
+            System.out.print(numOutgoing[0]);
+            for (int i=1; i < numOutgoing.length; i++) {
+                System.out.print(", "+numOutgoing[i]);
+            }
+            System.out.print("\n");
+        }
+
+        if (verbosity >= 1) {
+            System.out.print("First Step A: ");
+            System.out.print(weights[0]);
+            for (int i=1; i < weights.length; i++) {
+                System.out.print(", "+weights[i]);
+            }
+            System.out.print("\n");
+        }
+
+        // Calculate incoming links (First step B)
+        // Add the weights of the incoming links and assign to the node we are looking at
+        for (int i=0; i < outerMatrix.size(); i++) {
+            // Get the row at i
+            inner = outerMatrix.get(i);
+            for (int j=0; j < inner.size(); j++) {
+                if (inner.get(j) == 1) {
+                    newWeights[j] += weights[i];
+                }
+            }
+        }
+        // Initialize newWeights to all 0 (I had to do this the long annoying way for it to work)
+        for (int i=0; i < newWeights.length; i++) {
+            weights[i] = newWeights[i];
+            newWeights[i] = 0;
+        }
+
+        if (verbosity >= 1) {
+            System.out.print("First Step B: ");
+            System.out.print(weights[0]);
+            for (int i=1; i < weights.length; i++) {
+                System.out.print(", "+weights[i]);
+            }
+            System.out.print("\n");
+        }
+
+        // Calculate PageRank (Second step)
+        // Basically combining both parts of step 1 (made it easier to figure out splitting them first)
+        for (int i=0; i < outerMatrix.size(); i++) {
+            // Get the row at i
+            inner = outerMatrix.get(i);
+            for (int j=0; j < inner.size(); j++) {
+                if (inner.get(j) == 1) {
+                    newWeights[j] = newWeights[j]+(weights[i]/numOutgoing[i]);
+                }
+            }
+        }
+        // Initialize newWeights to all 0 (I had to do this the long annoying way for it to work)
+        for (int i=0; i < newWeights.length; i++) {
+            weights[i] = newWeights[i];
+            newWeights[i] = 0;
+        }
+
+        if (verbosity >= 1) {
+            System.out.print("Second Step: ");
+            System.out.print(weights[0]);
+            for (int i=1; i < weights.length; i++) {
+                System.out.print(", "+weights[i]);
+            }
+            System.out.print("\n");
+        }
+
+        // Apply damping factor (Last step)
+        for (int i=0; i < weights.length; i++) {
+            weights[i] = (1.0-dampingFactor)+(weights[i]*dampingFactor);
+        }
+
+        if (verbosity >= 1) {
+            System.out.print("Last Step (Damping): ");
+            System.out.print(weights[0]);
+            for (int i=1; i < weights.length; i++) {
+                System.out.print(", "+weights[i]);
+            }
+            System.out.print("\n");
+        }
     }
     
 
