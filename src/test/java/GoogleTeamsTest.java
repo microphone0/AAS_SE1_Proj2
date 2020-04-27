@@ -384,4 +384,84 @@ public class GoogleTeamsTest
        	assertEquals(true,worked);
         System.out.println("\n");
     }
+
+    @Test
+    public void test31ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase31_KDS.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test32ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase32_PN.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test33ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase33_DW.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test34ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase34_SN.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test35ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase35_Friend.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test36ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase36_ADF.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test37ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase37_PAR.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test38ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase38_ST.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test39ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase39_ST.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test40ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase40_MP.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
 }
