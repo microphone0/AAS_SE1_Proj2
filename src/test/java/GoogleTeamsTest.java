@@ -20,10 +20,6 @@ import org.junit.runners.MethodSorters;
 import org.junit.*;
 
 
-
-
-
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GoogleTeamsTest
 {
@@ -471,8 +467,90 @@ public class GoogleTeamsTest
     }
 
     @Test
-    public void test41ReadFile()
+    public void test40pt5ReadFile()
     {
         googleTeams.pageRank();
     }
+
+    @Test
+    public void test41ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase41_JL.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test42ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase42_AOT.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test43ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase43_HAP.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test44ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase44_BJ.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test45ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase45_PAF.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test46ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase46_Simp.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test47ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase47_SBSP.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test48ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase48_SWL.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test49ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase49_TCR.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void test50ReadFile()
+    {
+    	boolean worked = googleTeams.readFile("testCases/testcase50_ITSV.csv");
+       	assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+
 }

@@ -1,20 +1,20 @@
 Glossary:
 
-Buckets (or Teams, Groups) - the collection of individuals that are determined by the program.
+Teams, Groups - the collection of individuals that are determined by the program.
 
-Individuals - a single person that will be organized in a bucket
+Individuals - a single person that will be organized in a group
 
 Choices - the recommendations made by individuals of who they want on their team
 
-Happiness - points denoted by individuals and their choices in the same bucket
-	Overall happiness - the sum of happiness in a bucket
+Happiness - points denoted by individuals and their choices in the same group
+	Overall happiness - the sum of happiness in a group
 	Individual happiness - the sum of happiness an individual gets when any amount of 
-their choices are in the same bucket as the individual
+their choices are in the same group as the individual
 
 Unhappiness - points denoted by individuals who don’t get their choices
-	Overall happiness - the sum of unhappiness in a bucket
+	Overall happiness - the sum of unhappiness in a group
 	Individual happiness - the sum of unhappiness an individual gets when an  
-amount of their choices are not in the same bucket as the individual
+amount of their choices are not in the same group as the individual
 
 Algorithm - the code in a program that determines the teams and calculates the happiness and 
 unhappiness that maximizes happiness and minimizes unhappiness
@@ -22,4 +22,17 @@ unhappiness that maximizes happiness and minimizes unhappiness
 Ranking Priority - the order an individual places their choices in the csv file that helps 
 determines happiness, descending order from left to right in the choices section of the 
 file, that will increase the chance the algorithm places the individual and their choices in 
-the same bucket
+the same group 
+
+Priorities (preferences) - Each person has a choice of 7 different people which they can request 
+to be in their team. They can rank them from 1 to 7 with one being their favorite and 7 being their 
+least favorite. Also can be referred to as "preferences."
+
+PageRank (funtion) - Takes the matrix from the input file and calculates the weight of each person 
+to determine teams
+
+TeamMaker (function) - Takes the values from Page Rank to make teams and if a person has the higher 
+weight, they have a higher chance of getting their choices
+
+UnhappinessCounter (funtion) - Checks to see if someone on a team got someone they didn't want on their team, 
+if they did they will be unhappy
