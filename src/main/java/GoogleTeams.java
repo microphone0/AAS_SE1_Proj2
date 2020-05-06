@@ -19,6 +19,7 @@ import java.util.Random;
 import java.lang.Object;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.lang.*;
 
 public class GoogleTeams {
     private static int test = 0;
@@ -50,11 +51,12 @@ public class GoogleTeams {
     private static ArrayList<String> inputString = new ArrayList<String>();
     private static ArrayList<String> peopleNames = new ArrayList<String>();
 
-    public static ArrayList<ArrayList<String>> stringMatrix;
-    public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
-    public static ArrayList<ArrayList<Integer>> intMatrix;
+    private static ArrayList<ArrayList<String>> stringMatrix;
+    private static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
+    private static ArrayList<ArrayList<Integer>> intMatrix;
 
-    public static double[] weights = null;
+    private static Double[] weights = null;
+    private static Map<Integer,Integer> teams = null;
 
 
 
@@ -174,6 +176,9 @@ public class GoogleTeams {
         System.out.println("GroupSize: " + groupsize);
         System.out.println("Number of People: " + numberOfPeople);
         //outputMatrix(KeanuReeves);
+
+        pageRank();
+        teamMaker();
     }
 
 
@@ -239,14 +244,14 @@ public boolean readFile(String file) {
 ///////////////////////////////////////////////////////
     
    
-    public void pageRank() {
+    public static void pageRank() {
     	numberOfPeople = intMatrix.size();
         //int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
-        double firstWeight = 1.0/numberOfPeople; // Used to initialize
-        weights = new double[numberOfPeople]; // Holds the final weights or what is currently been calculated
+        Double firstWeight = 1.0/numberOfPeople; // Used to initialize
+        weights = new Double[numberOfPeople]; // Holds the final weights or what is currently been calculated
         double dampingFactor = .85; // Used at last step
-        int[] numOutgoing = new int[numberOfPeople]; // Number of outgoing links
-        double[] newWeights = new double[numberOfPeople]; // To hold temporarily the new weights calculated
+        Integer[] numOutgoing = new Integer[numberOfPeople]; // Number of outgoing links
+        Double[] newWeights = new Double[numberOfPeople]; // To hold temporarily the new weights calculated
 
         // The matrix components will need inner not outerMatrix when connecting to rest of the code
         //ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
@@ -254,9 +259,9 @@ public boolean readFile(String file) {
 
         // Initialize all arrays to 0
         for (int i=0; i < numberOfPeople; i++) {
-            weights[i] = 0;
+            weights[i] = 0.0;
             numOutgoing[i] = 0;
-            newWeights[i] = 0;
+            newWeights[i] = 0.0;
         }
 
         // ALL TESTING CODE ***********************
@@ -405,7 +410,7 @@ public boolean readFile(String file) {
         // Initialize newWeights to all 0 (I had to do this the long annoying way for it to work)
         for (int i=0; i < newWeights.length; i++) {
             weights[i] = newWeights[i];
-            newWeights[i] = 0;
+            newWeights[i] = 0.0;
         }
 
         if (verbosity >= 1) {
@@ -431,7 +436,7 @@ public boolean readFile(String file) {
         // Initialize newWeights to all 0 (I had to do this the long annoying way for it to work)
         for (int i=0; i < newWeights.length; i++) {
             weights[i] = newWeights[i];
-            newWeights[i] = 0;
+            newWeights[i] = 0.0;
         }
 
         if (verbosity >= 1) {
@@ -456,12 +461,26 @@ public boolean readFile(String file) {
             }
             System.out.print("\n");
         }
-        teamMaker();
     }
 
 
 
-    public void teamMaker() {
+    public static void teamMaker() {
+    	// Create Map to hold new teams
+    	teams = Collections.synchronizedMap(new HashMap());
+
+    	//Sort weight array to get highest pageRank
+    	Arrays.sort(weights, Collections.reverseOrder());
+
+    	//if (verbosity >= 2) {
+    		System.out.print("Last Step (Damping): ");
+            System.out.print(weights[0]);
+            for (int i=1; i < weights.length; i++) {
+                System.out.print(", "+weights[i]);
+            }
+            System.out.print("\n");
+    	//}
+
     	for (int i=0; i < weights.length; i++) {
     		
     	}
