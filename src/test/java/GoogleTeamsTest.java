@@ -90,7 +90,8 @@ public class GoogleTeamsTest
         newAllNames.add("D");
 
         googleTeams.setAllNames(newAllNames);
-        ArrayList<ArrayList<Integer>> matrixReturn = googleTeams.createAdjacencyMatrix(outerMatrix); // returns integer matrix
+        googleTeams.createAdjacencyMatrix(outerMatrix);
+        ArrayList<ArrayList<Integer>> matrixReturn = googleTeams.getIntMatrix(); // returns integer matrix
         System.out.println("Output Testmatrix");
         GoogleTeams.outputAdjacencyMatrix(matrixReturn); // test
         System.out.println("End test: testCreateAdjacencyMatrix");
@@ -469,6 +470,42 @@ public class GoogleTeamsTest
     @Test
     public void test40pt5ReadFile()
     {
+        ArrayList<String> newAllNames = new ArrayList<String>();
+        ArrayList<ArrayList<Integer>> correctMatrix = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<String>> outerMatrix = new ArrayList<ArrayList<String>>();
+        ArrayList<String> inner = new ArrayList<String>();      
+
+        inner.add("A");     
+        inner.add("B");
+        inner.add("C");
+        inner.add("D");
+        outerMatrix.add(inner); // add first list
+        inner = new ArrayList<String>(); // create a new inner list
+
+        inner.add("B");     
+        inner.add("A");                                   
+        outerMatrix.add(inner); // add second list
+        inner = new ArrayList<String>(); // create a new inner list
+
+        inner.add("C");     
+        inner.add("D");
+        inner.add("B");                                 
+        outerMatrix.add(inner); // add third list
+        inner = new ArrayList<String>(); // create a new inner list
+
+        inner.add("D");     
+        inner.add("B");
+        inner.add("C"); 
+        inner.add("A");                                  
+        outerMatrix.add(inner); // add fourth list
+
+        newAllNames.add("A");
+        newAllNames.add("B");
+        newAllNames.add("C");
+        newAllNames.add("D");
+
+        googleTeams.setAllNames(newAllNames);
+        googleTeams.createAdjacencyMatrix(outerMatrix);
         googleTeams.pageRank();
     }
 

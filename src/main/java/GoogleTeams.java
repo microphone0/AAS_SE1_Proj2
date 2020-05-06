@@ -52,6 +52,11 @@ public class GoogleTeams {
 
     public static ArrayList<ArrayList<String>> stringMatrix;
     public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
+    public static ArrayList<ArrayList<Integer>> intMatrix;
+
+    public static double[] weights = null;
+
+
 
     // change input String into number of peopleNames
     public static void main(String[] args)
@@ -163,15 +168,13 @@ public class GoogleTeams {
 
         // creates matrix
         System.out.println("New Matrix: ");
-        KeanuReeves = createMatrix(matrixTestInput);
+        //KeanuReeves = createMatrix(matrixTestInput);
 
         // outputs GroupSize, Number of People and Matrix
         System.out.println("GroupSize: " + groupsize);
         System.out.println("Number of People: " + numberOfPeople);
-        outputMatrix(KeanuReeves);
+        //outputMatrix(KeanuReeves);
     }
-
-
 
 
 
@@ -234,76 +237,23 @@ public boolean readFile(String file) {
 
     }
 ///////////////////////////////////////////////////////
-
-
-
-
-
-
-
-    // takes input String and creates a matrix
-    public static int[][] createMatrix(ArrayList<String> becomeMatrix)
-    {
-        String tempString;
-        String[] splitArray;
-
-        // could become arraylist to split array function
-        for(int i = 0; i < becomeMatrix.size(); i++)
-        {
-            // copy into tempstring
-            tempString = becomeMatrix.get(i);
-
-            // split temp string and assign to array
-            splitArray = tempString.split(",");
-
-            // take first in array and assign into names string
-            peopleNames.add(splitArray[0]);
-        }
-
-        // creates new matrix with dimenensions
-        numberOfPeople = peopleNames.size();
-        int[][] newMatrix = new int[numberOfPeople][numberOfPeople];
-        
-        // assign splitArray values into matrix (three for loops)
-        for(int i = 0; i < peopleNames.size(); i++) // matrix height
-        {
-            tempString = becomeMatrix.get(i);
-            splitArray = tempString.split(",");
-            //System.out.println(splitArray[0] + splitArray[1] + splitArray[2]);
-
-            for(int n = 0; n < peopleNames.size(); n++) // matrix width
-            {
-                for(int f = 1; f < splitArray.length; f++) // starts at 1 bc first in array is person choosing preference
-                {
-                    //String nameTemp = peopleNames.get(n);
-                    //String splitTemp = splitArray[f];
-                    //System.out.println("pn: " + nameTemp + "  sa: " + splitTemp);
-                    if(Arrays.asList(peopleNames.get(i)).equals(splitArray[f]))
-                    {
-                        newMatrix[i][n] = 1;
-                        System.out.println(newMatrix[i][n]);
-                    }
-                }
-            }
-        }
-
-        return newMatrix;
-    }
     
+   
     public void pageRank() {
-        int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
-        double firstWeight = 1.0/tempNumPeople; // Used to initialize
-        double[] weights = new double[tempNumPeople]; // Holds the final weights or what is currently been calculated
+    	numberOfPeople = intMatrix.size();
+        //int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
+        double firstWeight = 1.0/numberOfPeople; // Used to initialize
+        weights = new double[numberOfPeople]; // Holds the final weights or what is currently been calculated
         double dampingFactor = .85; // Used at last step
-        int[] numOutgoing = new int[tempNumPeople]; // Number of outgoing links
-        double[] newWeights = new double[tempNumPeople]; // To hold temporarily the new weights calculated
+        int[] numOutgoing = new int[numberOfPeople]; // Number of outgoing links
+        double[] newWeights = new double[numberOfPeople]; // To hold temporarily the new weights calculated
 
         // The matrix components will need inner not outerMatrix when connecting to rest of the code
-        ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
+        //ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> inner = new ArrayList<Integer>();
 
         // Initialize all arrays to 0
-        for (int i=0; i < tempNumPeople; i++) {
+        for (int i=0; i < numberOfPeople; i++) {
             weights[i] = 0;
             numOutgoing[i] = 0;
             newWeights[i] = 0;
@@ -353,45 +303,45 @@ public boolean readFile(String file) {
         A has one incoming from C; and C has one outgoing to A
         B has one incoming from A; and B has one outgoing to E
         */
-        inner.add(0);     
-        inner.add(1);
-        inner.add(0);
-        inner.add(0);
-        inner.add(0);
-        outerMatrix.add(inner); // add first list
-        inner = new ArrayList<Integer>(); // create a new inner list
+        // inner.add(0);     
+        // inner.add(1);
+        // inner.add(0);
+        // inner.add(0);
+        // inner.add(0);
+        // outerMatrix.add(inner); // add first list
+        // inner = new ArrayList<Integer>(); // create a new inner list
 
-        inner.add(0);     
-        inner.add(0);
-        inner.add(0); 
-        inner.add(0);
-        inner.add(1);                              
-        outerMatrix.add(inner); // add second list
-        inner = new ArrayList<Integer>(); // create a new inner list
+        // inner.add(0);     
+        // inner.add(0);
+        // inner.add(0); 
+        // inner.add(0);
+        // inner.add(1);                              
+        // outerMatrix.add(inner); // add second list
+        // inner = new ArrayList<Integer>(); // create a new inner list
 
-        inner.add(1);     
-        inner.add(1);
-        inner.add(0);
-        inner.add(1);
-        inner.add(1);                       
-        outerMatrix.add(inner);
-        inner = new ArrayList<Integer>();
+        // inner.add(1);     
+        // inner.add(1);
+        // inner.add(0);
+        // inner.add(1);
+        // inner.add(1);                       
+        // outerMatrix.add(inner);
+        // inner = new ArrayList<Integer>();
 
-        inner.add(0);     
-        inner.add(0);
-        inner.add(1);
-        inner.add(0);
-        inner.add(1);                       
-        outerMatrix.add(inner);
-        inner = new ArrayList<Integer>();
+        // inner.add(0);     
+        // inner.add(0);
+        // inner.add(1);
+        // inner.add(0);
+        // inner.add(1);                       
+        // outerMatrix.add(inner);
+        // inner = new ArrayList<Integer>();
 
-        inner.add(0);     
-        inner.add(0);
-        inner.add(0);
-        inner.add(1);
-        inner.add(0);                       
-        outerMatrix.add(inner);
-        inner = new ArrayList<Integer>();
+        // inner.add(0);     
+        // inner.add(0);
+        // inner.add(0);
+        // inner.add(1);
+        // inner.add(0);                       
+        // outerMatrix.add(inner);
+        // inner = new ArrayList<Integer>();
         //*******************************************
 
         // Initialize weights (Initial step)
@@ -410,10 +360,10 @@ public boolean readFile(String file) {
         
         // Calculate outgoing links (First step A)
         // Divide the weights by the number of outgoing links
-        for (int i=0; i < outerMatrix.size(); i++) {
+        for (int i=0; i < intMatrix.size(); i++) {
             double numOut = 0;
             // Get the row at i
-            inner = outerMatrix.get(i);
+            inner = intMatrix.get(i);
             for (int j=0; j < inner.size(); j++) {
                 if (inner.get(j) == 1) {
                     numOut++;
@@ -443,9 +393,9 @@ public boolean readFile(String file) {
 
         // Calculate incoming links (First step B)
         // Add the weights of the incoming links and assign to the node we are looking at
-        for (int i=0; i < outerMatrix.size(); i++) {
+        for (int i=0; i < intMatrix.size(); i++) {
             // Get the row at i
-            inner = outerMatrix.get(i);
+            inner = intMatrix.get(i);
             for (int j=0; j < inner.size(); j++) {
                 if (inner.get(j) == 1) {
                     newWeights[j] += weights[i];
@@ -469,9 +419,9 @@ public boolean readFile(String file) {
 
         // Calculate PageRank (Second step)
         // Basically combining both parts of step 1 (made it easier to figure out splitting them first)
-        for (int i=0; i < outerMatrix.size(); i++) {
+        for (int i=0; i < intMatrix.size(); i++) {
             // Get the row at i
-            inner = outerMatrix.get(i);
+            inner = intMatrix.get(i);
             for (int j=0; j < inner.size(); j++) {
                 if (inner.get(j) == 1) {
                     newWeights[j] = newWeights[j]+(weights[i]/numOutgoing[i]);
@@ -506,38 +456,25 @@ public boolean readFile(String file) {
             }
             System.out.print("\n");
         }
-    }
-    
-
-
-    
-
-
-    // for demo
-    public static void outputMatrix(int[][] matrix)
-    {
-        String matrixOutputLine;
-        for(int i = 0; i < matrix.length; i++)
-        {
-            matrixOutputLine = "";
-            for(int n = 0; n < matrix[i].length; n++)
-            {
-                matrixOutputLine = matrixOutputLine + matrix[i][n];
-            }
-            System.out.println(matrixOutputLine);
-        }
+        teamMaker();
     }
 
 
 
+    public void teamMaker() {
+    	for (int i=0; i < weights.length; i++) {
+    		
+    	}
+
+    }
 
 
 
     // takes an arraylist of arraylist of Strings and returns adjacency arraylist of arraylist of Integers
     // works so long as allNames is assigned correctly  <-- *** needs to be fixed ***
-    public static ArrayList<ArrayList<Integer>> createAdjacencyMatrix(ArrayList<ArrayList<String>> stringMatrix)
+    public static void createAdjacencyMatrix(ArrayList<ArrayList<String>> stringMatrix)
     {
-        ArrayList<ArrayList<Integer>> intMatrix = new ArrayList<ArrayList<Integer>>();
+        intMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> tempArrayList;
         boolean match = false;
 
@@ -563,7 +500,6 @@ public boolean readFile(String file) {
             intMatrix.add(tempArrayList); // adds a row to intMatrix
         }
 
-        return intMatrix;
     }
 
 
@@ -583,5 +519,10 @@ public boolean readFile(String file) {
     {
         // create new allNames that contains arrayList passed into method
         allNames = new ArrayList<String>(reassign);
+    }
+
+
+    public static ArrayList<ArrayList<Integer>> getIntMatrix() {
+    	return intMatrix;
     }
 }
