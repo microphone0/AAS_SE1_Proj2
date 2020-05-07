@@ -21,30 +21,20 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class GoogleTeams {
-    private static int test = 0;
-    private static int numberOfPeople = 0; // should be 9
 
-    // adam Saxtons variables
-    private static int groupsize = 3;
-    private static int verbosity = 1;
-    private static int n = 1000;
-    private static int l = 5;
-    private static int r = 2;
-    private static String fileName = "EMPTY";
-    private static boolean v_one = false;
-    private static boolean v_two = false;
-    private static boolean v_three = false;
-    private static boolean v_four = false;
-    private static int totalNumPerson = 0; // readFile()
+    // global variables
+    private static int numberOfPeople = 0;
+    private static int groupsize = 3; // -t
+    private static int verbosity = 0; // -v
+    private static int n = 1000; // delete
+    private static int l = 5; // delete
+    private static int r = 2; // delete
+    private static boolean v_one = false; // delete
     private static ArrayList<String> bucket_list;
-    private static ArrayList<String> teams_main;
-    private static ArrayList<String> teams_other;
-    private static String[] testInputString = new String[]{"A,S,A2","S,A2,A", "A2,A,S"};
-    private static ArrayList<String> matrixTestInput = new ArrayList<String>(); // testing
     private static ArrayList<String> inputString = new ArrayList<String>();
 
     public static ArrayList<ArrayList<String>> stringMatrix;
-    public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() needs to be put int readFile()
+    public static ArrayList<String> allNames = new ArrayList<String>();
     public static ArrayList<ArrayList<Integer>> intMatrix;
 
     public static double[] weights = null;
@@ -59,23 +49,12 @@ public class GoogleTeams {
 
     // reset function for testing
     public static void reset() {
-        test = 0;
         numberOfPeople = 0;
         groupsize = 3;
-        verbosity = 1;
+        verbosity = 0;
         n = 1000;
         l = 5;
         r = 2;
-        fileName = "EMPTY";
-        v_one = false;
-        v_two = false;
-        v_three = false;
-        v_four = false;
-        totalNumPerson = 0; //
-        bucket_list = new ArrayList<String>();
-        teams_main = new ArrayList<String>();
-        teams_other = new ArrayList<String>();
-        matrixTestInput = new ArrayList<String>();
         inputString = new ArrayList<String>();
 
         stringMatrix = new ArrayList<ArrayList<String>>();
@@ -89,9 +68,6 @@ public class GoogleTeams {
     // change input String into number of peopleNames
     public static void main(String[] args)
     {
-        matrixTestInput.add("A,S,B");
-        matrixTestInput.add("S,B,A");
-        matrixTestInput.add("B,A,S");
         // reading input from comand line
         if (args.length > 0)
         {
@@ -101,37 +77,10 @@ public class GoogleTeams {
             for (int val = 0; val < args.length; val+=2)
             {
 
-                // Verbosity
+                // Verbosity // The higher the number the more debugging code the user can see
                 if(args[val].equals("-v"))
                 {
-                    // The higher the number the more debugging code the user can see
-                    if (Integer.valueOf(args[val + 1]) > 0) {
-                        verbosity = Integer.valueOf(args[val+1]);
-                        if (verbosity > 4){
-                            verbosity = 4;
-                        }
-                    }
-                    if(Integer.valueOf(args[val + 1]) > 0){
-                        v_one = true;
-                    }
-
-                    if(Integer.valueOf(args[val + 1]) > 1){
-						v_one = true;
-                        v_two = true;
-                    }
-
-                    if(Integer.valueOf(args[val + 1]) > 2){
-						v_one = true;
-                        v_two = true;
-                        v_three = true;
-                    }
-
-                    if(Integer.valueOf(args[val + 1]) > 3){
-						v_one = true;
-                        v_two = true;
-                        v_three = true;
-                        v_four = true;
-                    }
+                    verbosity = Integer.valueOf(args[val+1]);
                 }
 
                 // GroupSize
@@ -166,27 +115,11 @@ public class GoogleTeams {
             System.out.println("The command line arguments are:\n"); 
             System.out.println("Verbosity: " + verbosity);
             System.out.println("Groupsize (t): " + groupsize);
-            System.out.println("Verbosity 1: " + v_one);
-            System.out.println("Verbosity 2: " + v_two);
-            System.out.println("Verbosity 3: " + v_three);
-            System.out.println("Verbosity 4: " + v_four);
             System.out.println("t: " + groupsize);
             System.out.println("n: " + n);
             System.out.println("l: " + l);
             System.out.println("r: " + r);
         }
-
-        // scans file into inputString (arraylist)
-        // if(test == 0)
-		// {
-        //     System.out.println("GoogleTeams:");
-        //     Scanner scanner = new Scanner(System.in);
-        //     String tempString = ""; // if needed
-		// 	while(scanner.hasNext())
-		// 	{
-        //         inputString.add(scanner.next());
-		// 	}
-        // }
 
         // shows what inputString has // needs to be parsed
         for(int i = 0; i < inputString.size(); i++)
@@ -206,22 +139,15 @@ public class GoogleTeams {
 
 
 
-public boolean readFile(String file) {
+    public boolean readFile(String file) {
 
         System.out.println("ReadFile Function");
         String csvFile = file;
         String line = "";
         String cvsSplitBy = ",";
         bucket_list = new ArrayList<String>(); // can delete
-        teams_main = new ArrayList<String>(); // can delete
-        teams_other = new ArrayList<String>(); // can delete
         stringMatrix = new ArrayList<ArrayList<String>>();
         ArrayList<String> inner;
-
-		// v_one = true;
-		// v_two = true;
-		// v_three = true;
-		// v_four = true;
 
         // numPerson help with tracking the people in the csv and makes printing more sense
         int numPerson = 1;
@@ -263,9 +189,6 @@ public boolean readFile(String file) {
             }
             // -v // outputStringMatrix(stringMatrix);
 
-            teams_other = bucket_list;
-			totalNumPerson = numPerson-1;
-            System.out.println("ReadFile WORKED");
             return true;
 
         } catch (IOException e) {
@@ -274,7 +197,7 @@ public boolean readFile(String file) {
         }
 
     }
-///////////////////////////////////////////////////////
+
     
    
     public void pageRank() {
@@ -550,6 +473,8 @@ public boolean readFile(String file) {
             System.out.println( matrix.get(outer) );
         }
     }
+
+
 
     // outputs string matrix
     public static void outputStringMatrix(ArrayList<ArrayList<String>> matrix) // may not need parameters
