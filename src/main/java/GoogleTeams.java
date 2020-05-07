@@ -27,8 +27,8 @@ public class GoogleTeams {
     //private static int preferences = 6;
 
     // adam Saxtons variables
-    private static int groupsize = 3;
-    private static int verbosity = 1;
+    private static int groupsize = 2;
+    private static int verbosity = 0;
     private static int n = 1000;
     private static int l = 5;
     private static int r = 2;
@@ -55,9 +55,9 @@ public class GoogleTeams {
     private static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
     private static ArrayList<ArrayList<Integer>> intMatrix;
 
-    private static Double[] weights = null;
+    private static Float[] weights = null;
     private static Map<Integer,Integer> teams = null;
-
+    private static Map<Float,Integer> positionInMatrix = null;
 
 
     // change input String into number of peopleNames
@@ -247,11 +247,11 @@ public boolean readFile(String file) {
     public static void pageRank() {
     	numberOfPeople = intMatrix.size();
         //int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
-        Double firstWeight = 1.0/numberOfPeople; // Used to initialize
-        weights = new Double[numberOfPeople]; // Holds the final weights or what is currently been calculated
-        double dampingFactor = .85; // Used at last step
+        Float firstWeight = 1.0f/numberOfPeople; // Used to initialize
+        weights = new Float[numberOfPeople]; // Holds the final weights or what is currently been calculated
+        float dampingFactor = .85f; // Used at last step
         Integer[] numOutgoing = new Integer[numberOfPeople]; // Number of outgoing links
-        Double[] newWeights = new Double[numberOfPeople]; // To hold temporarily the new weights calculated
+        Float[] newWeights = new Float[numberOfPeople]; // To hold temporarily the new weights calculated
 
         // The matrix components will need inner not outerMatrix when connecting to rest of the code
         //ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
@@ -259,9 +259,9 @@ public boolean readFile(String file) {
 
         // Initialize all arrays to 0
         for (int i=0; i < numberOfPeople; i++) {
-            weights[i] = 0.0;
+            weights[i] = 0.0f;
             numOutgoing[i] = 0;
-            newWeights[i] = 0.0;
+            newWeights[i] = 0.0f;
         }
 
         // ALL TESTING CODE ***********************
@@ -366,7 +366,7 @@ public boolean readFile(String file) {
         // Calculate outgoing links (First step A)
         // Divide the weights by the number of outgoing links
         for (int i=0; i < intMatrix.size(); i++) {
-            double numOut = 0;
+            int numOut = 0;
             // Get the row at i
             inner = intMatrix.get(i);
             for (int j=0; j < inner.size(); j++) {
@@ -410,7 +410,7 @@ public boolean readFile(String file) {
         // Initialize newWeights to all 0 (I had to do this the long annoying way for it to work)
         for (int i=0; i < newWeights.length; i++) {
             weights[i] = newWeights[i];
-            newWeights[i] = 0.0;
+            newWeights[i] = 0.0f;
         }
 
         if (verbosity >= 1) {
@@ -436,7 +436,7 @@ public boolean readFile(String file) {
         // Initialize newWeights to all 0 (I had to do this the long annoying way for it to work)
         for (int i=0; i < newWeights.length; i++) {
             weights[i] = newWeights[i];
-            newWeights[i] = 0.0;
+            newWeights[i] = 0.0f;
         }
 
         if (verbosity >= 1) {
@@ -448,9 +448,12 @@ public boolean readFile(String file) {
             System.out.print("\n");
         }
 
+        positionInMatrix = Collections.synchronizedMap(new HashMap());
+
         // Apply damping factor (Last step)
         for (int i=0; i < weights.length; i++) {
-            weights[i] = (1.0-dampingFactor)+(weights[i]*dampingFactor);
+            weights[i] = (1.0f-dampingFactor)+(weights[i]*dampingFactor);
+            positionInMatrix.put(weights[i],i);
         }
 
         if (verbosity >= 1) {
@@ -469,22 +472,56 @@ public boolean readFile(String file) {
     	// Create Map to hold new teams
     	teams = Collections.synchronizedMap(new HashMap());
 
+    	//Create a new array to sort with, so we don't lose track of which pageRank is for which
+    	Float[] sortedWeights = new Float[weights.length];
+    	for (int i=0; i < sortedWeights.length; i++) {
+            sortedWeights[i] = weights[i];
+        }
     	//Sort weight array to get highest pageRank
-    	Arrays.sort(weights, Collections.reverseOrder());
+    	Arrays.sort(sortedWeights, Collections.reverseOrder());
 
-    	//if (verbosity >= 2) {
-    		System.out.print("Last Step (Damping): ");
-            System.out.print(weights[0]);
-            for (int i=1; i < weights.length; i++) {
-                System.out.print(", "+weights[i]);
+    	if (verbosity >= 2) {
+            System.out.print(sortedWeights[0]);
+            for (int i=1; i < sortedWeights.length; i++) {
+                System.out.print(", "+sortedWeights[i]);
             }
             System.out.print("\n");
-    	//}
-
-    	for (int i=0; i < weights.length; i++) {
-    		
     	}
 
+        int teamNum = 1;
+        boolean gotChoice;
+        ArrayList<Integer> inner = new ArrayList<Integer>();
+
+ 		// Start putting people into teams
+    	for (int i=0; i < sortedWeights.length; i++) {
+    		if (!teams.containsValue(positionInMatrix.get(sortedWeights[i]))) {
+    			teams.put(teamNum,positionInMatrix.get(sortedWeights[i]));
+
+                for (int j=0; j < groupsize; j++) {
+                    inner = intMatrix.get(teams.get(teamNum));
+                    gotChoice = false;
+
+                    for (int k=0; k < inner.size() && !gotChoice; k++) {
+                        if (inner.get(k) == 1 && !teams.containsValue(k)) {
+                            teams.put(teamNum,positionInMatrix.get(weights[k]));
+                            gotChoice = true;
+                        }
+                    }
+                    if (!gotChoice) {
+                        boolean someoneGotIn = false;
+
+                        for (int a=0; a < sortedWeights.length && !someoneGotIn; a++) {
+                            if (!teams.containsValue(positionInMatrix.get(sortedWeights[i]))) {
+                                teams.put(teamNum,positionInMatrix.get(sortedWeights[i]));
+                                someoneGotIn = true;
+                            }
+                        }
+                    }
+                }
+                teamNum = teamNum+1;
+    		}
+    	}
+        System.out.println(Arrays.asList(teams));
     }
 
 

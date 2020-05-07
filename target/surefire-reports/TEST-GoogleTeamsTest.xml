@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="54" failures="0" name="GoogleTeamsTest" time="0.128" errors="0" skipped="0">
+<testsuite tests="55" failures="0" name="GoogleTeamsTest" time="0.131" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
@@ -60,58 +60,59 @@
     <property name="sun.stdout.encoding" value="cp437"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="GoogleTeamsTest" name="test10ReadFile" time="0.004"/>
+  <testcase classname="GoogleTeamsTest" name="test10ReadFile" time="0.005"/>
   <testcase classname="GoogleTeamsTest" name="test11ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test12ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test13ReadFile" time="0.003"/>
+  <testcase classname="GoogleTeamsTest" name="test13ReadFile" time="0.004"/>
   <testcase classname="GoogleTeamsTest" name="test14ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test15ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test15ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test16ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test17ReadFile" time="0.027"/>
+  <testcase classname="GoogleTeamsTest" name="test17ReadFile" time="0.025"/>
   <testcase classname="GoogleTeamsTest" name="test18ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test19ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test1ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test1point5ReadFile" time="0.003"/>
-  <testcase classname="GoogleTeamsTest" name="test20ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test21ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test20ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test21ReadFile" time="0.003"/>
   <testcase classname="GoogleTeamsTest" name="test22ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test23ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test24ReadFile" time="0.005"/>
-  <testcase classname="GoogleTeamsTest" name="test25ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test23ReadFile" time="0.003"/>
+  <testcase classname="GoogleTeamsTest" name="test24ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test25ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test26ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test27ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test28ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test27ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test28ReadFile" time="0.003"/>
   <testcase classname="GoogleTeamsTest" name="test29ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test2ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test2ReadFile" time="0.001"/>
   <testcase classname="GoogleTeamsTest" name="test30ReadFile" time="0.001"/>
   <testcase classname="GoogleTeamsTest" name="test31ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test32ReadFile" time="0.003"/>
   <testcase classname="GoogleTeamsTest" name="test33ReadFile" time="0.001"/>
   <testcase classname="GoogleTeamsTest" name="test34ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test35ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test36ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test37ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test36ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test37ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test38ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test39ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test3ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test40ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test40pt5ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test40ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test40pt5ReadFile" time="0.001"/>
   <testcase classname="GoogleTeamsTest" name="test41ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test42ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test43ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test44ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test45ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test42ReadFile" time="0.003"/>
+  <testcase classname="GoogleTeamsTest" name="test43ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test44ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test45ReadFile" time="0.001"/>
   <testcase classname="GoogleTeamsTest" name="test46ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test47ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test47ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test48ReadFile" time="0.002"/>
   <testcase classname="GoogleTeamsTest" name="test49ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test4ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test50ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test5ReadFile" time="0.003"/>
-  <testcase classname="GoogleTeamsTest" name="test6ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test7ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="test8ReadFile" time="0.001"/>
-  <testcase classname="GoogleTeamsTest" name="test9ReadFile" time="0.002"/>
-  <testcase classname="GoogleTeamsTest" name="testCreateAdjacencyMatrix" time="0.004"/>
-  <testcase classname="GoogleTeamsTest" name="testOutputAdjacencyMatrix" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test4ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test50ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test51ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test5ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test6ReadFile" time="0.003"/>
+  <testcase classname="GoogleTeamsTest" name="test7ReadFile" time="0.001"/>
+  <testcase classname="GoogleTeamsTest" name="test8ReadFile" time="0.002"/>
+  <testcase classname="GoogleTeamsTest" name="test9ReadFile" time="0"/>
+  <testcase classname="GoogleTeamsTest" name="testCreateAdjacencyMatrix" time="0.003"/>
+  <testcase classname="GoogleTeamsTest" name="testOutputAdjacencyMatrix" time="0.004"/>
 </testsuite>
