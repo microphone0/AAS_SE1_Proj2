@@ -56,8 +56,8 @@ public class GoogleTeams {
     private static ArrayList<ArrayList<Integer>> intMatrix;
 
     private static Float[] weights = null;
-    private static Map<Integer,Integer> teams = null;
-    private static Map<Float,Integer> positionInMatrix = null;
+    private static ArrayList<Float> posInMatrix = null;
+    private static ArrayList<ArrayList<Integer>> teams;
 
 
     // change input String into number of peopleNames
@@ -246,7 +246,7 @@ public boolean readFile(String file) {
    
     public static void pageRank() {
     	numberOfPeople = intMatrix.size();
-        //int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
+        numberOfPeople = 5; // For testing, won't need when connecting to rest of program
         Float firstWeight = 1.0f/numberOfPeople; // Used to initialize
         weights = new Float[numberOfPeople]; // Holds the final weights or what is currently been calculated
         float dampingFactor = .85f; // Used at last step
@@ -254,7 +254,7 @@ public boolean readFile(String file) {
         Float[] newWeights = new Float[numberOfPeople]; // To hold temporarily the new weights calculated
 
         // The matrix components will need inner not outerMatrix when connecting to rest of the code
-        //ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
+        intMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> inner = new ArrayList<Integer>();
 
         // Initialize all arrays to 0
@@ -308,45 +308,45 @@ public boolean readFile(String file) {
         A has one incoming from C; and C has one outgoing to A
         B has one incoming from A; and B has one outgoing to E
         */
-        // inner.add(0);     
-        // inner.add(1);
-        // inner.add(0);
-        // inner.add(0);
-        // inner.add(0);
-        // outerMatrix.add(inner); // add first list
-        // inner = new ArrayList<Integer>(); // create a new inner list
+        inner.add(0);     
+        inner.add(1);
+        inner.add(0);
+        inner.add(0);
+        inner.add(0);
+        intMatrix.add(inner); // add first list
+        inner = new ArrayList<Integer>(); // create a new inner list
 
-        // inner.add(0);     
-        // inner.add(0);
-        // inner.add(0); 
-        // inner.add(0);
-        // inner.add(1);                              
-        // outerMatrix.add(inner); // add second list
-        // inner = new ArrayList<Integer>(); // create a new inner list
+        inner.add(0);     
+        inner.add(0);
+        inner.add(0); 
+        inner.add(0);
+        inner.add(1);                              
+        intMatrix.add(inner); // add second list
+        inner = new ArrayList<Integer>(); // create a new inner list
 
-        // inner.add(1);     
-        // inner.add(1);
-        // inner.add(0);
-        // inner.add(1);
-        // inner.add(1);                       
-        // outerMatrix.add(inner);
-        // inner = new ArrayList<Integer>();
+        inner.add(1);     
+        inner.add(1);
+        inner.add(0);
+        inner.add(1);
+        inner.add(1);                       
+        intMatrix.add(inner);
+        inner = new ArrayList<Integer>();
 
-        // inner.add(0);     
-        // inner.add(0);
-        // inner.add(1);
-        // inner.add(0);
-        // inner.add(1);                       
-        // outerMatrix.add(inner);
-        // inner = new ArrayList<Integer>();
+        inner.add(0);     
+        inner.add(0);
+        inner.add(1);
+        inner.add(0);
+        inner.add(1);                       
+        intMatrix.add(inner);
+        inner = new ArrayList<Integer>();
 
-        // inner.add(0);     
-        // inner.add(0);
-        // inner.add(0);
-        // inner.add(1);
-        // inner.add(0);                       
-        // outerMatrix.add(inner);
-        // inner = new ArrayList<Integer>();
+        inner.add(0);     
+        inner.add(0);
+        inner.add(0);
+        inner.add(1);
+        inner.add(0);                       
+        intMatrix.add(inner);
+        inner = new ArrayList<Integer>();
         //*******************************************
 
         // Initialize weights (Initial step)
@@ -448,12 +448,14 @@ public boolean readFile(String file) {
             System.out.print("\n");
         }
 
-        positionInMatrix = Collections.synchronizedMap(new HashMap());
+        posInMatrix = new ArrayList<Float>();
 
         // Apply damping factor (Last step)
         for (int i=0; i < weights.length; i++) {
+            Float temp = (weights[i]*dampingFactor);
+            Float temp1 = (1.0f-dampingFactor);
             weights[i] = (1.0f-dampingFactor)+(weights[i]*dampingFactor);
-            positionInMatrix.put(weights[i],i);
+            posInMatrix.add(i,(temp1+temp));
         }
 
         if (verbosity >= 1) {
@@ -469,59 +471,114 @@ public boolean readFile(String file) {
 
 
     public static void teamMaker() {
-    	// Create Map to hold new teams
-    	teams = Collections.synchronizedMap(new HashMap());
 
-    	//Create a new array to sort with, so we don't lose track of which pageRank is for which
-    	Float[] sortedWeights = new Float[weights.length];
-    	for (int i=0; i < sortedWeights.length; i++) {
-            sortedWeights[i] = weights[i];
+        // Initailize the teams data structure and data structure currently holding the team that is being built
+    	teams = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> currentTeam;
+
+        ArrayList<Float> sortedPR = new ArrayList<Float>();
+        for (int i=0; i < weights.length; i++) {
+            sortedPR.add(weights[i]);
         }
-    	//Sort weight array to get highest pageRank
-    	Arrays.sort(sortedWeights, Collections.reverseOrder());
 
-    	if (verbosity >= 2) {
-            System.out.print(sortedWeights[0]);
-            for (int i=1; i < sortedWeights.length; i++) {
-                System.out.print(", "+sortedWeights[i]);
+        // Sort the list in Descending Order, so we can get the highest PageRank
+        sortedPR.sort(Collections.reverseOrder());
+        currentTeam = new ArrayList<Integer>();
+        
+        for (int i=0; i < sortedPR.size(); i++) {
+
+            boolean notInTeam = true;
+
+            ArrayList<Integer> checkingTeam;
+            int tempIndex = posInMatrix.indexOf(sortedPR.get(i));
+            // Check if index is in team already
+            for (int j=0; j < teams.size(); j++) {
+
+                checkingTeam = new ArrayList<Integer>();
+                checkingTeam = teams.get(j);
+                if (checkingTeam.contains(tempIndex)) {
+                    notInTeam = false;
+                }
             }
-            System.out.print("\n");
-    	}
 
-        int teamNum = 1;
-        boolean gotChoice;
-        ArrayList<Integer> inner = new ArrayList<Integer>();
+            // Start making teams
+            if (notInTeam) {
 
- 		// Start putting people into teams
-    	for (int i=0; i < sortedWeights.length; i++) {
-    		if (!teams.containsValue(positionInMatrix.get(sortedWeights[i]))) {
-    			teams.put(teamNum,positionInMatrix.get(sortedWeights[i]));
+                currentTeam.add(tempIndex);
+                ArrayList<Integer> tempPref = new ArrayList<Integer>();
+                tempPref = intMatrix.get(tempIndex);
+                for (int k=1; k < groupsize; k++) {
 
-                for (int j=0; j < groupsize; j++) {
-                    inner = intMatrix.get(teams.get(teamNum));
-                    gotChoice = false;
+                    boolean didNotGetOne = true;
+                    for (int l=0; didNotGetOne && l < tempPref.size(); l++) {
 
-                    for (int k=0; k < inner.size() && !gotChoice; k++) {
-                        if (inner.get(k) == 1 && !teams.containsValue(k)) {
-                            teams.put(teamNum,positionInMatrix.get(weights[k]));
-                            gotChoice = true;
+                        int oneOrNot = tempPref.get(l);
+                        if (oneOrNot == 1) {
+                            // Check if index is in team already
+                            boolean notInTeam2 = true;
+                            for (int j=0; j < teams.size(); j++) {
+
+                                checkingTeam = teams.get(j);
+                                if (checkingTeam.contains(tempPref.indexOf(oneOrNot)) && currentTeam.contains(tempPref.indexOf(oneOrNot))) {
+                                    notInTeam2 = false;
+                                }
+                            }
+
+                            if (notInTeam) {
+                                int tempIndex2 = tempPref.indexOf(oneOrNot);
+                                currentTeam.add(tempIndex2);
+                                didNotGetOne = false;
+                            }
                         }
                     }
-                    if (!gotChoice) {
-                        boolean someoneGotIn = false;
 
-                        for (int a=0; a < sortedWeights.length && !someoneGotIn; a++) {
-                            if (!teams.containsValue(positionInMatrix.get(sortedWeights[i]))) {
-                                teams.put(teamNum,positionInMatrix.get(sortedWeights[i]));
-                                someoneGotIn = true;
+                    if (didNotGetOne) {
+                        boolean notDone = true;
+                        for (int n=0; notDone && n < sortedPR.size(); n++) {
+                            boolean notInTeam3 = true;
+
+                            ArrayList<Integer> checkingTeam2;
+                            int tempIndex2 = posInMatrix.indexOf(sortedPR.get(n));
+                            // Check if index is in team already
+                            for (int j=0; j < teams.size(); j++) {
+
+                                checkingTeam2 = new ArrayList<Integer>();
+                                checkingTeam2 = teams.get(j);
+                                if (checkingTeam2.contains(tempIndex2) && currentTeam.contains(tempIndex2)) {
+                                    notInTeam3 = false;
+                                }
+                            }
+
+                            if (notInTeam3) {
+                                currentTeam.add(tempIndex2);
+                                notDone = false;
+                                tempIndex = tempIndex2;
+                                tempPref = intMatrix.get(tempIndex2);
                             }
                         }
                     }
                 }
-                teamNum = teamNum+1;
-    		}
-    	}
-        System.out.println(Arrays.asList(teams));
+                System.out.println("Current Team: ");
+                for (int j=0; j < currentTeam.size(); j++) {
+                    System.out.print(" "+currentTeam.get(j));
+                }
+                System.out.println("\n");
+                
+                teams.add(currentTeam);
+                currentTeam = new ArrayList<Integer>();
+            }
+        }
+
+        ArrayList<Integer> tempCurrentTeam = new ArrayList<Integer>();
+        System.out.println("Teams:");
+        for (int i=0; i < teams.size(); i++) {
+
+            tempCurrentTeam = teams.get(i);
+            for (int j=0; j < tempCurrentTeam.size(); j++) {
+                System.out.print(" "+tempCurrentTeam.get(j));
+            }
+            System.out.print("\n");
+        }
     }
 
 
