@@ -8,6 +8,7 @@
  *****************************************/
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,17 +27,12 @@ public class GoogleTeams {
     private static int numberOfPeople = 0;
     private static int groupsize = 3; // -t
     private static int verbosity = 0; // -v
-    private static int n = 1000; // delete
-    private static int l = 5; // delete
-    private static int r = 2; // delete
     private static boolean v_one = false; // delete
     private static ArrayList<String> bucket_list;
-    private static ArrayList<String> inputString = new ArrayList<String>();
-
+    private static String fileName = ""; // sub for readFile() to work
     public static ArrayList<ArrayList<String>> stringMatrix;
     public static ArrayList<String> allNames = new ArrayList<String>();
     public static ArrayList<ArrayList<Integer>> intMatrix;
-
     public static double[] weights = null;
 
     // setters for variables
@@ -52,10 +48,6 @@ public class GoogleTeams {
         numberOfPeople = 0;
         groupsize = 3;
         verbosity = 0;
-        n = 1000;
-        l = 5;
-        r = 2;
-        inputString = new ArrayList<String>();
 
         stringMatrix = new ArrayList<ArrayList<String>>();
         allNames = new ArrayList<String>();
@@ -87,81 +79,63 @@ public class GoogleTeams {
                 if(args[val].equals("-t")){
                     groupsize = Integer.valueOf(args[val+1]);
                 }
-                
-                // looptimes
-                if(args[val].equals("-n")){
-                    n = Integer.valueOf(args[val+1]);
-                }
-
-                // how many shuffles
-                if(args[val].equals("-l")){
-                    l = Integer.valueOf(args[val+1]);
-                }
-
-                // decline percentage
-                if(args[val].equals("-r")){
-                    r = Integer.valueOf(args[val+1]);
-                }
             }
         }
         else {
             System.out.println("No command line "+ 
                                "arguments found."); 
-        }
+        }            
 
         // outputs command line information
-        if(verbosity == 2)
+        if(verbosity >= 2)
         {
-            System.out.println("The command line arguments are:\n"); 
-            System.out.println("Verbosity: " + verbosity);
+            System.out.println("\nThe command line arguments are:"); 
+            System.out.println("Verbosity (v): " + verbosity);
             System.out.println("Groupsize (t): " + groupsize);
-            System.out.println("t: " + groupsize);
-            System.out.println("n: " + n);
-            System.out.println("l: " + l);
-            System.out.println("r: " + r);
+            System.out.println("Filename: " + fileName);
         }
 
-        // shows what inputString has // needs to be parsed
-        for(int i = 0; i < inputString.size(); i++)
-        {
-            System.out.println(inputString.get(i));
-        }
-
+        // reads in file
+        readFile(fileName);
         // creates matrix
         System.out.println("New Matrix: ");
-        //KeanuReeves = createMatrix(matrixTestInput);
+        createAdjacencyMatrix();
+        outputAdjacencyMatrix(intMatrix); // -v
+        pageRank();
 
-        // outputs GroupSize, Number of People and Matrix
-        System.out.println("GroupSize: " + groupsize);
-        System.out.println("Number of People: " + numberOfPeople);
-        //outputMatrix(KeanuReeves);
     }
 
 
 
-    public boolean readFile(String file) {
+    public static boolean readFile(String file) {
 
         System.out.println("ReadFile Function");
-        String csvFile = file;
         String line = "";
-        String cvsSplitBy = ",";
+        String cvsSplitBy = ", ";
         bucket_list = new ArrayList<String>(); // can delete
         stringMatrix = new ArrayList<ArrayList<String>>();
         ArrayList<String> inner;
 
         // numPerson help with tracking the people in the csv and makes printing more sense
         int numPerson = 1;
+        
+        Scanner scanner = new Scanner(System.in);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        //try (System.in != null) {
 
+            while (scanner.hasNext()) {
 
-            while ((line = br.readLine()) != null) {
-
+                line = scanner.nextLine();
+                System.out.println("SCANNER OUTPUT: " + line);
                 // use comma as separator
                 // doesn't need quotes around any of the things in the file
                 // may cause type errors in the future
                 String[] member = line.split(cvsSplitBy);
 
+                System.out.println("Member String Array:");
+                for (int i = 0; i < member.length; i++){
+                    System.out.println(member[i]);
+                }
                 allNames.add(member[0]); // assings each name into all names //* need to check if in allNames for A Proposal *//
                 
                 // creating Arraylist of Arraylist String matrix
@@ -188,19 +162,21 @@ public class GoogleTeams {
 				numPerson++;
             }
             // -v // outputStringMatrix(stringMatrix);
-
+            System.out.println("FINISHED RUNNING READFILE");
+            
             return true;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        //     System.out.println("DID NOT READ FILE IN CORRECTLY");
+        //     return false;
+        // }
 
     }
 
     
    
-    public void pageRank() {
+    public static void pageRank() {
     	numberOfPeople = intMatrix.size();
         //int tempNumPeople = 5; // For testing, won't need when connecting to rest of program
         double firstWeight = 1.0/numberOfPeople; // Used to initialize
@@ -422,7 +398,7 @@ public class GoogleTeams {
 
 
 
-    public void teamMaker() {
+    public static void teamMaker() {
     	for (int i=0; i < weights.length; i++) {
     		
     	}
