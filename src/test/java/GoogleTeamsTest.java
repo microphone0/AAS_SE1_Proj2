@@ -31,7 +31,8 @@ public class GoogleTeamsTest
     public TestRule watcher =
     	new TestWatcher() {
     	    protected void starting(Description description) {
-    		System.out.println("Starting test: " + description.getMethodName());
+            System.out.println("Starting test: " + description.getMethodName());
+            googleTeams.reset();
     	}
     };
     
@@ -55,8 +56,20 @@ public class GoogleTeamsTest
     @Test
     public void testCreateAdjacencyMatrix()
     {
+        /*
+        String Matrix
+        A B C D
+        B A
+        C D B
+        D B C A
+
+        Int Matrix
+        0, 1, 1, 1
+        1, 0, 0, 0
+        0, 1, 0, 1
+        1, 1, 1, 0
+        */
         ArrayList<String> newAllNames = new ArrayList<String>();
-        ArrayList<ArrayList<Integer>> correctMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<ArrayList<String>> outerMatrix = new ArrayList<ArrayList<String>>();
         ArrayList<String> inner = new ArrayList<String>();      
 
@@ -90,13 +103,11 @@ public class GoogleTeamsTest
         newAllNames.add("D");
 
         googleTeams.setAllNames(newAllNames);
-        googleTeams.createAdjacencyMatrix(outerMatrix);
-        ArrayList<ArrayList<Integer>> matrixReturn = googleTeams.getIntMatrix(); // returns integer matrix
+        googleTeams.createAdjacencyMatrix();
+        ArrayList<ArrayList<Integer>> matrixReturn = GoogleTeams.getIntMatrix(); // returns integer matrix
         System.out.println("Output Testmatrix");
         GoogleTeams.outputAdjacencyMatrix(matrixReturn); // test
         System.out.println("End test: testCreateAdjacencyMatrix");
-        
-
     }
 
 
@@ -104,8 +115,6 @@ public class GoogleTeamsTest
     @Test
     public void testOutputAdjacencyMatrix()
     {
-        ArrayList<ArrayList<Integer>> matrixReturn; //= new ArrayList<ArrayList<Integer>>();
-
         ArrayList<ArrayList<Integer>> outerMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> inner = new ArrayList<Integer>();        
 
@@ -135,9 +144,6 @@ public class GoogleTeamsTest
         inner.add(1);
         inner.add(0);                           
         outerMatrix.add(inner); // add fourth list
-
-        ArrayList<ArrayList<Integer>> correctMatrix = new ArrayList<ArrayList<Integer>>();
-
         
         GoogleTeams.outputAdjacencyMatrix(outerMatrix);
         System.out.println("End test: TestOutputMatrix");
@@ -156,9 +162,21 @@ public class GoogleTeamsTest
     @Test
     public void test2ReadFile()
     {
+        googleTeams.reset();
     	boolean worked = googleTeams.readFile("testCases/testcase2_CAH.csv");
        	assertEquals(true,worked);
         System.out.println("\n");
+
+        System.out.println("Output String Matrix");
+        ArrayList<ArrayList<String>> STRINGMATRIX = googleTeams.getStringMatrix();
+        googleTeams.outputStringMatrix(STRINGMATRIX);
+
+        System.out.println("Create Adjacency Matrix:");
+        googleTeams.createAdjacencyMatrix();
+
+        System.out.println("Output Adjacency Matrix");
+        googleTeams.outputAdjacencyMatrix(googleTeams.intMatrix);
+        System.out.println("FINISH TEST 2 READFILE\n");
     }
 
     @Test
@@ -470,8 +488,8 @@ public class GoogleTeamsTest
     @Test
     public void test40pt5ReadFile()
     {
+        googleTeams.reset();
         ArrayList<String> newAllNames = new ArrayList<String>();
-        ArrayList<ArrayList<Integer>> correctMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<ArrayList<String>> outerMatrix = new ArrayList<ArrayList<String>>();
         ArrayList<String> inner = new ArrayList<String>();      
 
@@ -505,8 +523,8 @@ public class GoogleTeamsTest
         newAllNames.add("D");
 
         googleTeams.setAllNames(newAllNames);
-        googleTeams.createAdjacencyMatrix(outerMatrix);
-        googleTeams.pageRank();
+        googleTeams.createAdjacencyMatrix();
+        //googleTeams.pageRank();
     }
 
     @Test

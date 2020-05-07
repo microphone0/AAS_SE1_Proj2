@@ -23,7 +23,6 @@ import java.util.*;
 public class GoogleTeams {
     private static int test = 0;
     private static int numberOfPeople = 0; // should be 9
-    //private static int preferences = 6;
 
     // adam Saxtons variables
     private static int groupsize = 3;
@@ -40,21 +39,50 @@ public class GoogleTeams {
     private static ArrayList<String> bucket_list;
     private static ArrayList<String> teams_main;
     private static ArrayList<String> teams_other;
-    private static ArrayList<String[]> preferences;
-
-    private static int matrixColumns;
-    private static int matrixRows;
-    private static int[][] KeanuReeves;
     private static String[] testInputString = new String[]{"A,S,A2","S,A2,A", "A2,A,S"};
-    private static ArrayList<String> matrixTestInput = new ArrayList<String>();/////
+    private static ArrayList<String> matrixTestInput = new ArrayList<String>(); // testing
     private static ArrayList<String> inputString = new ArrayList<String>();
-    private static ArrayList<String> peopleNames = new ArrayList<String>();
 
     public static ArrayList<ArrayList<String>> stringMatrix;
-    public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
+    public static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() needs to be put int readFile()
     public static ArrayList<ArrayList<Integer>> intMatrix;
 
     public static double[] weights = null;
+
+    // setters for variables
+    public void v_oneSetter(boolean setterV_one) { v_one = setterV_one; }
+
+    // getters
+    public static ArrayList<ArrayList<Integer>> getIntMatrix() { return intMatrix; }
+    public static ArrayList<ArrayList<String>> getStringMatrix() { return stringMatrix; }
+    public ArrayList<String> getAllNames() { return allNames; }
+
+    // reset function for testing
+    public static void reset() {
+        test = 0;
+        numberOfPeople = 0;
+        groupsize = 3;
+        verbosity = 1;
+        n = 1000;
+        l = 5;
+        r = 2;
+        fileName = "EMPTY";
+        v_one = false;
+        v_two = false;
+        v_three = false;
+        v_four = false;
+        totalNumPerson = 0; //
+        bucket_list = new ArrayList<String>();
+        teams_main = new ArrayList<String>();
+        teams_other = new ArrayList<String>();
+        matrixTestInput = new ArrayList<String>();
+        inputString = new ArrayList<String>();
+
+        stringMatrix = new ArrayList<ArrayList<String>>();
+        allNames = new ArrayList<String>();
+        intMatrix = new ArrayList<ArrayList<Integer>>();
+        weights = null;
+    }
 
 
 
@@ -178,18 +206,18 @@ public class GoogleTeams {
 
 
 
-/////////////////////////////////////////////////////// moved from main file to new function for testing
 public boolean readFile(String file) {
 
         System.out.println("ReadFile Function");
         String csvFile = file;
         String line = "";
         String cvsSplitBy = ",";
-        bucket_list = new ArrayList<String>();
-        teams_main = new ArrayList<String>();
-        teams_other = new ArrayList<String>();
-        preferences = new ArrayList<String[]>();
-		
+        bucket_list = new ArrayList<String>(); // can delete
+        teams_main = new ArrayList<String>(); // can delete
+        teams_other = new ArrayList<String>(); // can delete
+        stringMatrix = new ArrayList<ArrayList<String>>();
+        ArrayList<String> inner;
+
 		// v_one = true;
 		// v_two = true;
 		// v_three = true;
@@ -197,6 +225,7 @@ public boolean readFile(String file) {
 
         // numPerson help with tracking the people in the csv and makes printing more sense
         int numPerson = 1;
+
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
 
@@ -207,7 +236,15 @@ public boolean readFile(String file) {
                 // may cause type errors in the future
                 String[] member = line.split(cvsSplitBy);
 
-                preferences.add(member);
+                allNames.add(member[0]); // assings each name into all names //* need to check if in allNames for A Proposal *//
+                
+                // creating Arraylist of Arraylist String matrix
+                inner = new ArrayList<String>();
+                for (int i = 0; i < member.length; i++)
+                {
+                    inner.add(member[i]);
+                }
+                stringMatrix.add(inner);
 
                 if(v_one){
                     // Print out what's in the csv
@@ -218,12 +255,13 @@ public boolean readFile(String file) {
                             System.out.print(","+member[i]);
                         }
                     }
-                    System.out.println("]");
+                    System.out.println(" ]");
                 }
                 bucket_list.add(String.valueOf(numPerson));
                 				
 				numPerson++;
             }
+            // -v // outputStringMatrix(stringMatrix);
 
             teams_other = bucket_list;
 			totalNumPerson = numPerson-1;
@@ -472,14 +510,14 @@ public boolean readFile(String file) {
 
     // takes an arraylist of arraylist of Strings and returns adjacency arraylist of arraylist of Integers
     // works so long as allNames is assigned correctly  <-- *** needs to be fixed ***
-    public static void createAdjacencyMatrix(ArrayList<ArrayList<String>> stringMatrix)
+    public static void createAdjacencyMatrix()
     {
         intMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> tempArrayList;
         boolean match = false;
 
-        System.out.println( "allNames Size: " + allNames.size()); // test
-        System.out.println( "stringMatrix Size: " + stringMatrix.size()); // test
+        // -v // System.out.println( "allNames Size: " + allNames.size()); // needs to be put in 
+        // -v // System.out.println( "stringMatrix Size: " + stringMatrix.size()); // test
         for(int outer = 0; outer < stringMatrix.size(); outer++)
         {
             tempArrayList = new ArrayList<Integer>(); // clears tempArrayList
@@ -488,7 +526,7 @@ public boolean readFile(String file) {
                 match = false; // resets match
                 for(int inner = 1; inner < stringMatrix.get(outer).size(); inner++) // starts at one bc '0' doesnt count
                 {
-                    if(stringMatrix.get(outer).get(inner) == allNames.get(compare))
+                    if( stringMatrix.get(outer).get(inner).contains(allNames.get(compare) ))
                         match = true;
                 }
 
@@ -513,16 +551,20 @@ public boolean readFile(String file) {
         }
     }
 
+    // outputs string matrix
+    public static void outputStringMatrix(ArrayList<ArrayList<String>> matrix) // may not need parameters
+    {
+        for(int outer = 0; outer < matrix.size(); outer++)
+        {
+            System.out.println( matrix.get(outer) );
+        }
+    }
+
 
 
     public static void setAllNames(ArrayList<String> reassign)
     {
         // create new allNames that contains arrayList passed into method
         allNames = new ArrayList<String>(reassign);
-    }
-
-
-    public static ArrayList<ArrayList<Integer>> getIntMatrix() {
-    	return intMatrix;
     }
 }
