@@ -238,7 +238,7 @@ public class GoogleTeamsTest
     @Test
     public void test10ReadFile()
     {
-    	boolean worked = googleTeams.readFile("testCases/testcase10_MASH.csv");
+        boolean worked = googleTeams.readFile("testCases/testcase10_MASH.csv");
        	assertEquals(true,worked);
         System.out.println("\n");
     }
@@ -297,7 +297,7 @@ public class GoogleTeamsTest
     public void test17ReadFile()
     {
     	boolean worked = googleTeams.readFile("testCases/testcase17_PMK.csv");
-       	assertEquals(false,worked);
+       	assertEquals(true,worked);
         System.out.println("\n");
     }
 

@@ -63,18 +63,15 @@ public class GoogleTeams {
         // reading input from comand line
         if (args.length > 0)
         {
-
             // iterating the args array and printing 
             // the command line arguments 
             for (int val = 0; val < args.length; val+=2)
             {
-
                 // Verbosity // The higher the number the more debugging code the user can see
                 if(args[val].equals("-v"))
                 {
                     verbosity = Integer.valueOf(args[val+1]);
                 }
-
                 // GroupSize
                 if(args[val].equals("-t")){
                     groupsize = Integer.valueOf(args[val+1]);
@@ -87,7 +84,7 @@ public class GoogleTeams {
         }            
 
         // outputs command line information
-        if(verbosity >= 2)
+        if(verbosity >= 1)
         {
             System.out.println("\nThe command line arguments are:"); 
             System.out.println("Verbosity (v): " + verbosity);
@@ -96,18 +93,20 @@ public class GoogleTeams {
         }
 
         // reads in file
-        readFile(fileName);
+        readFileMain();
         // creates matrix
         System.out.println("New Matrix: ");
         createAdjacencyMatrix();
-        outputAdjacencyMatrix(intMatrix); // -v
+        // -v // outputAdjacencyMatrix(intMatrix); 
         pageRank();
-
     }
 
+    public static boolean readFile(String inputFileName){
+        fileName = inputFileName;
+        return true;
+    }
 
-
-    public static boolean readFile(String file) {
+    public static void readFileMain() {
 
         System.out.println("ReadFile Function");
         String line = "";
@@ -118,18 +117,11 @@ public class GoogleTeams {
 
         // numPerson help with tracking the people in the csv and makes printing more sense
         int numPerson = 1;
-        
         Scanner scanner = new Scanner(System.in);
-
-        //try (System.in != null) {
-
             while (scanner.hasNext()) {
-
                 line = scanner.nextLine();
                 System.out.println("SCANNER OUTPUT: " + line);
-                // use comma as separator
-                // doesn't need quotes around any of the things in the file
-                // may cause type errors in the future
+                // use comma and space as separator
                 String[] member = line.split(cvsSplitBy);
 
                 System.out.println("Member String Array:");
@@ -161,17 +153,18 @@ public class GoogleTeams {
                 				
 				numPerson++;
             }
-            // -v // outputStringMatrix(stringMatrix);
-            System.out.println("FINISHED RUNNING READFILE");
-            
-            return true;
+        
+            scanner.close();
 
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        //     System.out.println("DID NOT READ FILE IN CORRECTLY");
-        //     return false;
-        // }
-
+            // verbosity
+            if (verbosity == 4){
+                System.out.println("String Matrix: ");
+                outputStringMatrix(stringMatrix);  
+                System.out.println("\n");
+            }
+            if (verbosity >= 1){
+                System.out.println("FINISHED RUNNING READFILE");
+            }
     }
 
     
