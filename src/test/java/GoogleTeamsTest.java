@@ -24,7 +24,7 @@ import org.junit.*;
 public class GoogleTeamsTest
 {
 
-    GoogleTeams googleTeams;
+    PagerankTeams googleTeams;
     
 
     @Rule
@@ -38,7 +38,7 @@ public class GoogleTeamsTest
     
     @Before
     public void initialize() {
-		googleTeams = new GoogleTeams();
+		googleTeams = new PagerankTeams();
     }
 
 
@@ -104,9 +104,9 @@ public class GoogleTeamsTest
 
         googleTeams.setAllNames(newAllNames);
         googleTeams.createAdjacencyMatrix();
-        ArrayList<ArrayList<Integer>> matrixReturn = GoogleTeams.getIntMatrix(); // returns integer matrix
+        ArrayList<ArrayList<Integer>> matrixReturn = googleTeams.getIntMatrix(); // returns integer matrix
         System.out.println("Output Testmatrix");
-        GoogleTeams.outputAdjacencyMatrix(matrixReturn); // test
+        googleTeams.outputAdjacencyMatrix(matrixReturn); // test
         System.out.println("End test: testCreateAdjacencyMatrix");
     }
 
@@ -145,7 +145,7 @@ public class GoogleTeamsTest
         inner.add(0);                           
         outerMatrix.add(inner); // add fourth list
         
-        GoogleTeams.outputAdjacencyMatrix(outerMatrix);
+        googleTeams.outputAdjacencyMatrix(outerMatrix);
         System.out.println("End test: TestOutputMatrix");
     }
 

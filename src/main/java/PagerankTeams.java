@@ -22,7 +22,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.lang.*;
 
-public class GoogleTeams {
+public class PagerankTeams {
     // global variables
     private static int numberOfPeople = 0;
     private static int groupsize = 3; // -t
