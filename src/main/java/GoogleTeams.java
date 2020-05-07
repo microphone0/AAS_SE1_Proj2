@@ -8,6 +8,7 @@
  *****************************************/
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,50 +23,43 @@ import java.util.*;
 import java.lang.*;
 
 public class GoogleTeams {
-    private static int test = 0;
-    private static int numberOfPeople = 0; // should be 9
-    //private static int preferences = 6;
-
-    // adam Saxtons variables
-    private static int groupsize = 2;
-    private static int verbosity = 0;
-    private static int n = 1000;
-    private static int l = 5;
-    private static int r = 2;
-    private static String fileName = "EMPTY";
-    private static boolean v_one = false;
-    private static boolean v_two = false;
-    private static boolean v_three = false;
-    private static boolean v_four = false;
-    private static int totalNumPerson = 0; // readFile()
+    // global variables
+    private static int numberOfPeople = 0;
+    private static int groupsize = 3; // -t
+    private static int verbosity = 0; // -v
+    private static boolean v_one = false; // delete
     private static ArrayList<String> bucket_list;
-    private static ArrayList<String> teams_main;
-    private static ArrayList<String> teams_other;
-    private static ArrayList<String[]> preferences;
-
-    private static int matrixColumns;
-    private static int matrixRows;
-    private static int[][] KeanuReeves;
-    private static String[] testInputString = new String[]{"A,S,A2","S,A2,A", "A2,A,S"};
-    private static ArrayList<String> matrixTestInput = new ArrayList<String>();/////
-    private static ArrayList<String> inputString = new ArrayList<String>();
-    private static ArrayList<String> peopleNames = new ArrayList<String>();
-
-    private static ArrayList<ArrayList<String>> stringMatrix;
-    private static ArrayList<String> allNames = new ArrayList<String>(); // used in createAdjacencyMatrix() // same as peopleNames
-    private static ArrayList<ArrayList<Integer>> intMatrix;
-
+    private static String fileName = ""; // sub for readFile() to work
+    public static ArrayList<ArrayList<String>> stringMatrix;
+    public static ArrayList<String> allNames = new ArrayList<String>();
+    public static ArrayList<ArrayList<Integer>> intMatrix;
     private static Float[] weights = null;
     private static ArrayList<Float> posInMatrix = null;
     private static ArrayList<ArrayList<Integer>> teams;
+    // setters for variables
+    public void v_oneSetter(boolean setterV_one) { v_one = setterV_one; }
+
+    // getters
+    public static ArrayList<ArrayList<Integer>> getIntMatrix() { return intMatrix; }
+    public static ArrayList<ArrayList<String>> getStringMatrix() { return stringMatrix; }
+    public ArrayList<String> getAllNames() { return allNames; }
+
+    // reset function for testing
+    public static void reset() {
+        numberOfPeople = 0;
+        groupsize = 3;
+        verbosity = 0;
+
+        stringMatrix = new ArrayList<ArrayList<String>>();
+        allNames = new ArrayList<String>();
+        intMatrix = new ArrayList<ArrayList<Integer>>();
+        weights = null;
+    }
 
 
     // change input String into number of peopleNames
     public static void main(String[] args)
     {
-        matrixTestInput.add("A,S,B");
-        matrixTestInput.add("S,B,A");
-        matrixTestInput.add("B,A,S");
         // reading input from comand line
         if (args.length > 0)
         {
@@ -75,144 +69,82 @@ public class GoogleTeams {
             for (int val = 0; val < args.length; val+=2)
             {
 
-                // Verbosity
+                // Verbosity // The higher the number the more debugging code the user can see
                 if(args[val].equals("-v"))
                 {
-                    // The higher the number the more debugging code the user can see
-                    if (Integer.valueOf(args[val + 1]) > 0) {
-                        verbosity = Integer.valueOf(args[val+1]);
-                        if (verbosity > 4){
-                            verbosity = 4;
-                        }
-                    }
-                    if(Integer.valueOf(args[val + 1]) > 0){
-                        v_one = true;
-                    }
-
-                    if(Integer.valueOf(args[val + 1]) > 1){
-						v_one = true;
-                        v_two = true;
-                    }
-
-                    if(Integer.valueOf(args[val + 1]) > 2){
-						v_one = true;
-                        v_two = true;
-                        v_three = true;
-                    }
-
-                    if(Integer.valueOf(args[val + 1]) > 3){
-						v_one = true;
-                        v_two = true;
-                        v_three = true;
-                        v_four = true;
-                    }
+                    verbosity = Integer.valueOf(args[val+1]);
                 }
 
                 // GroupSize
                 if(args[val].equals("-t")){
                     groupsize = Integer.valueOf(args[val+1]);
                 }
-                
-                // looptimes
-                if(args[val].equals("-n")){
-                    n = Integer.valueOf(args[val+1]);
-                }
-
-                // how many shuffles
-                if(args[val].equals("-l")){
-                    l = Integer.valueOf(args[val+1]);
-                }
-
-                // decline percentage
-                if(args[val].equals("-r")){
-                    r = Integer.valueOf(args[val+1]);
-                }
             }
         }
         else {
             System.out.println("No command line "+ 
                                "arguments found."); 
-        }
+        }            
 
         // outputs command line information
-        if(verbosity == 2)
+        if(verbosity >= 2)
         {
-            System.out.println("The command line arguments are:\n"); 
-            System.out.println("Verbosity: " + verbosity);
+            System.out.println("\nThe command line arguments are:"); 
+            System.out.println("Verbosity (v): " + verbosity);
             System.out.println("Groupsize (t): " + groupsize);
-            System.out.println("Verbosity 1: " + v_one);
-            System.out.println("Verbosity 2: " + v_two);
-            System.out.println("Verbosity 3: " + v_three);
-            System.out.println("Verbosity 4: " + v_four);
-            System.out.println("t: " + groupsize);
-            System.out.println("n: " + n);
-            System.out.println("l: " + l);
-            System.out.println("r: " + r);
+            System.out.println("Filename: " + fileName);
         }
 
-        // scans file into inputString (arraylist)
-        // if(test == 0)
-		// {
-        //     System.out.println("GoogleTeams:");
-        //     Scanner scanner = new Scanner(System.in);
-        //     String tempString = ""; // if needed
-		// 	while(scanner.hasNext())
-		// 	{
-        //         inputString.add(scanner.next());
-		// 	}
-        // }
-
-        // shows what inputString has // needs to be parsed
-        for(int i = 0; i < inputString.size(); i++)
-        {
-            System.out.println(inputString.get(i));
-        }
-
+        // reads in file
+        readFile(fileName);
         // creates matrix
         System.out.println("New Matrix: ");
-        //KeanuReeves = createMatrix(matrixTestInput);
-
-        // outputs GroupSize, Number of People and Matrix
-        System.out.println("GroupSize: " + groupsize);
-        System.out.println("Number of People: " + numberOfPeople);
-        //outputMatrix(KeanuReeves);
-
+        createAdjacencyMatrix();
+        outputAdjacencyMatrix(intMatrix); // -v
         pageRank();
         teamMaker();
     }
 
 
 
-/////////////////////////////////////////////////////// moved from main file to new function for testing
-public boolean readFile(String file) {
+    public static boolean readFile(String file) {
 
         System.out.println("ReadFile Function");
-        String csvFile = file;
         String line = "";
-        String cvsSplitBy = ",";
-        bucket_list = new ArrayList<String>();
-        teams_main = new ArrayList<String>();
-        teams_other = new ArrayList<String>();
-        preferences = new ArrayList<String[]>();
-		
-		// v_one = true;
-		// v_two = true;
-		// v_three = true;
-		// v_four = true;
+        String cvsSplitBy = ", ";
+        bucket_list = new ArrayList<String>(); // can delete
+        stringMatrix = new ArrayList<ArrayList<String>>();
+        ArrayList<String> inner;
 
         // numPerson help with tracking the people in the csv and makes printing more sense
         int numPerson = 1;
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        
+        Scanner scanner = new Scanner(System.in);
 
+        //try (System.in != null) {
 
-            while ((line = br.readLine()) != null) {
+            while (scanner.hasNext()) {
 
+                line = scanner.nextLine();
+                System.out.println("SCANNER OUTPUT: " + line);
                 // use comma as separator
                 // doesn't need quotes around any of the things in the file
                 // may cause type errors in the future
                 String[] member = line.split(cvsSplitBy);
 
-                preferences.add(member);
+                System.out.println("Member String Array:");
+                for (int i = 0; i < member.length; i++){
+                    System.out.println(member[i]);
+                }
+                allNames.add(member[0]); // assings each name into all names //* need to check if in allNames for A Proposal *//
+                
+                // creating Arraylist of Arraylist String matrix
+                inner = new ArrayList<String>();
+                for (int i = 0; i < member.length; i++)
+                {
+                    inner.add(member[i]);
+                }
+                stringMatrix.add(inner);
 
                 if(v_one){
                     // Print out what's in the csv
@@ -223,25 +155,25 @@ public boolean readFile(String file) {
                             System.out.print(","+member[i]);
                         }
                     }
-                    System.out.println("]");
+                    System.out.println(" ]");
                 }
                 bucket_list.add(String.valueOf(numPerson));
                 				
 				numPerson++;
             }
-
-            teams_other = bucket_list;
-			totalNumPerson = numPerson-1;
-            System.out.println("ReadFile WORKED");
+            // -v // outputStringMatrix(stringMatrix);
+            System.out.println("FINISHED RUNNING READFILE");
+            
             return true;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        //     System.out.println("DID NOT READ FILE IN CORRECTLY");
+        //     return false;
+        // }
 
     }
-///////////////////////////////////////////////////////
+
     
    
     public static void pageRank() {
@@ -473,7 +405,7 @@ public boolean readFile(String file) {
     public static void teamMaker() {
 
         // Initailize the teams data structure and data structure currently holding the team that is being built
-    	teams = new ArrayList<ArrayList<Integer>>();
+    	  teams = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> currentTeam;
 
         ArrayList<Float> sortedPR = new ArrayList<Float>();
@@ -572,7 +504,6 @@ public boolean readFile(String file) {
         ArrayList<Integer> tempCurrentTeam = new ArrayList<Integer>();
         System.out.println("Teams:");
         for (int i=0; i < teams.size(); i++) {
-
             tempCurrentTeam = teams.get(i);
             for (int j=0; j < tempCurrentTeam.size(); j++) {
                 System.out.print(" "+tempCurrentTeam.get(j));
@@ -585,14 +516,14 @@ public boolean readFile(String file) {
 
     // takes an arraylist of arraylist of Strings and returns adjacency arraylist of arraylist of Integers
     // works so long as allNames is assigned correctly  <-- *** needs to be fixed ***
-    public static void createAdjacencyMatrix(ArrayList<ArrayList<String>> stringMatrix)
+    public static void createAdjacencyMatrix()
     {
         intMatrix = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> tempArrayList;
         boolean match = false;
 
-        System.out.println( "allNames Size: " + allNames.size()); // test
-        System.out.println( "stringMatrix Size: " + stringMatrix.size()); // test
+        // -v // System.out.println( "allNames Size: " + allNames.size()); // needs to be put in 
+        // -v // System.out.println( "stringMatrix Size: " + stringMatrix.size()); // test
         for(int outer = 0; outer < stringMatrix.size(); outer++)
         {
             tempArrayList = new ArrayList<Integer>(); // clears tempArrayList
@@ -601,7 +532,7 @@ public boolean readFile(String file) {
                 match = false; // resets match
                 for(int inner = 1; inner < stringMatrix.get(outer).size(); inner++) // starts at one bc '0' doesnt count
                 {
-                    if(stringMatrix.get(outer).get(inner) == allNames.get(compare))
+                    if( stringMatrix.get(outer).get(inner).contains(allNames.get(compare) ))
                         match = true;
                 }
 
@@ -628,14 +559,20 @@ public boolean readFile(String file) {
 
 
 
+    // outputs string matrix
+    public static void outputStringMatrix(ArrayList<ArrayList<String>> matrix) // may not need parameters
+    {
+        for(int outer = 0; outer < matrix.size(); outer++)
+        {
+            System.out.println( matrix.get(outer) );
+        }
+    }
+
+
+
     public static void setAllNames(ArrayList<String> reassign)
     {
         // create new allNames that contains arrayList passed into method
         allNames = new ArrayList<String>(reassign);
-    }
-
-
-    public static ArrayList<ArrayList<Integer>> getIntMatrix() {
-    	return intMatrix;
     }
 }
